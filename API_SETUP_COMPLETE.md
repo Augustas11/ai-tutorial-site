@@ -10,12 +10,12 @@
 
 ### Local Development (.env.local)
 ```bash
-DEEPSEEK_API_KEY=sk-b365cf03499a4b0285d71fece85e8199
+DEEPSEEK_API_KEY=your_api_key_here
 ```
 
 ### Production (Vercel)
 1. Go to Vercel Dashboard → Your Project → Settings → Environment Variables
-2. Add/Update: `DEEPSEEK_API_KEY` = `sk-b365cf03499a4b0285d71fece85e8199`
+2. Add/Update: `DEEPSEEK_API_KEY` = `your_api_key_here`
 3. Redeploy the application
 
 ## 🧪 Testing
