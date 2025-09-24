@@ -80,14 +80,14 @@ export default function TestAuthPage() {
                 type="email"
                 name="email"
                 placeholder="Email"
-                className="w-full px-3 py-2 border rounded"
+                className="w-full px-3 py-2 border rounded text-gray-900 placeholder-gray-500"
                 required
               />
               <input
                 type="text"
                 name="name"
                 placeholder="Name (optional)"
-                className="w-full px-3 py-2 border rounded"
+                className="w-full px-3 py-2 border rounded text-gray-900 placeholder-gray-500"
               />
               <button
                 type="submit"

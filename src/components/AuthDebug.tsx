@@ -67,7 +67,7 @@ export default function AuthDebug() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
-          className="w-full px-2 py-1 border rounded text-xs"
+          className="w-full px-2 py-1 border rounded text-xs text-gray-900 placeholder-gray-500"
           required
         />
         <input
@@ -75,7 +75,7 @@ export default function AuthDebug() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Name (optional)"
-          className="w-full px-2 py-1 border rounded text-xs"
+          className="w-full px-2 py-1 border rounded text-xs text-gray-900 placeholder-gray-500"
         />
         <button
           type="submit"
