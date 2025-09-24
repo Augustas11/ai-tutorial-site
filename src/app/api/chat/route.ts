@@ -16,10 +16,12 @@ export async function POST(request: NextRequest) {
     if (!DEEPSEEK_API_KEY) {
       console.error('DEEPSEEK_API_KEY is not set')
       return NextResponse.json(
-        { error: 'AI service is not configured' },
+        { error: 'AI service is not configured. Please check your API key.' },
         { status: 500 }
       )
     }
+
+    console.log('API Key found:', DEEPSEEK_API_KEY.substring(0, 10) + '...')
 
     // Create system prompt based on language
     const systemPrompt = language === 'vn' 
@@ -34,6 +36,7 @@ export async function POST(request: NextRequest) {
     ]
 
     // Call DeepSeek API
+    console.log('Sending request to DeepSeek API...')
     const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -49,11 +52,15 @@ export async function POST(request: NextRequest) {
       }),
     })
 
+    console.log('DeepSeek API response status:', response.status)
+
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}))
       console.error('DeepSeek API error:', errorData)
       return NextResponse.json(
-        { error: 'Failed to get AI response' },
+        { 
+          error: `AI service error: ${response.status} - ${errorData.error?.message || 'Unknown error'}` 
+        },
         { status: 500 }
       )
     }

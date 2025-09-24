@@ -81,9 +81,10 @@ export default function ChatInterface({ lang, placeholder }: ChatInterfaceProps)
 
     } catch (err) {
       console.error('Chat error:', err)
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error'
       setError(isVietnamese 
-        ? 'Có lỗi xảy ra. Vui lòng thử lại.' 
-        : 'Something went wrong. Please try again.'
+        ? `Có lỗi xảy ra: ${errorMessage}` 
+        : `Error: ${errorMessage}`
       )
     } finally {
       setIsLoading(false)
@@ -212,7 +213,7 @@ export default function ChatInterface({ lang, placeholder }: ChatInterfaceProps)
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder={placeholder || defaultPlaceholder}
-              className="w-full bg-white border border-gray-300 rounded-full py-2 pl-4 pr-16 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full bg-white border border-gray-300 rounded-full py-2 pl-4 pr-16 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 placeholder-gray-500"
               disabled={isLoading}
             />
             <div className="absolute inset-y-0 right-0 flex items-center pr-2">
