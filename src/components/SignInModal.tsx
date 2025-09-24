@@ -180,7 +180,7 @@ export default function SignInModal({
     )
   }
 
-  if (user && user.isGuest) {
+  if (user && user.isGuest && !isLoginMode) {
     console.log('SignInModal: Showing guest user modal')
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
