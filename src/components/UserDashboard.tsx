@@ -59,8 +59,8 @@ export default function UserDashboard({ lang, userId = 'default-user' }: UserDas
 
   const content = {
     en: {
-      title: 'Your Learning Dashboard',
-      subtitle: 'Track your progress and achievements',
+      title: 'My Streaks & Progress',
+      subtitle: 'Track your learning streaks, points, and achievements',
       stats: {
         tutorials: 'Tutorials Completed',
         chatMessages: 'AI Chat Messages',
@@ -81,8 +81,8 @@ export default function UserDashboard({ lang, userId = 'default-user' }: UserDas
       }
     },
     vn: {
-      title: 'Bảng Điều Khiển Học Tập',
-      subtitle: 'Theo dõi tiến độ và thành tích của bạn',
+      title: 'Hệ Thống Streak & Tiến Độ',
+      subtitle: 'Theo dõi chuỗi học tập, điểm số và thành tích của bạn',
       stats: {
         tutorials: 'Hướng dẫn đã hoàn thành',
         chatMessages: 'Tin nhắn AI Chat',

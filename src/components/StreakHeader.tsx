@@ -64,13 +64,16 @@ export default function StreakHeader({ userId = 'default-user', className = '', 
   if (!streakData || streakData.currentStreak === 0) {
     return (
       <div className={`flex items-center space-x-2 ${className}`}>
-        <div className="flex items-center space-x-2 bg-gray-100 px-4 py-2 rounded-full border border-gray-200">
+        <a 
+          href="/dashboard/en" 
+          className="flex items-center space-x-2 bg-gray-100 px-4 py-2 rounded-full border border-gray-200 hover:bg-gray-200 transition-colors cursor-pointer"
+        >
           <Zap className="h-4 w-4 text-gray-600" />
           <div className="flex flex-col">
             <span className="text-sm font-medium text-gray-700 leading-none">Start</span>
             <span className="text-xs text-gray-500 leading-none">Streak</span>
           </div>
-        </div>
+        </a>
       </div>
     )
   }
@@ -78,7 +81,10 @@ export default function StreakHeader({ userId = 'default-user', className = '', 
   return (
     <div className={`flex items-center space-x-2 ${className}`}>
       {/* Streak Display */}
-      <div className={`flex items-center space-x-2 bg-gradient-to-r ${getStreakColor(streakData.currentStreak)} px-4 py-2 rounded-full text-white shadow-sm`}>
+      <a 
+        href="/dashboard/en" 
+        className={`flex items-center space-x-2 bg-gradient-to-r ${getStreakColor(streakData.currentStreak)} px-4 py-2 rounded-full text-white shadow-sm hover:shadow-md transition-all cursor-pointer`}
+      >
         {getStreakIcon(streakData.currentStreak)}
         <div className="flex flex-col">
           <span className="font-bold text-sm leading-none">
@@ -88,7 +94,7 @@ export default function StreakHeader({ userId = 'default-user', className = '', 
             Streak
           </span>
         </div>
-      </div>
+      </a>
 
       {/* Streak Bonus Indicator */}
       {streakData.streakBonus > 0 && (

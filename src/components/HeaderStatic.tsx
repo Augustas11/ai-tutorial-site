@@ -26,7 +26,7 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
       icon: Wrench 
     },
     { 
-      name: isVietnamese ? 'Bảng điều khiển' : 'Dashboard', 
+      name: isVietnamese ? 'Hệ thống Streak' : 'My Streaks', 
       href: `/dashboard/${lang}`, 
       icon: BarChart3 
     },
