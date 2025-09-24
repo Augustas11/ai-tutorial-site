@@ -287,7 +287,14 @@ export default function SignInModal({
           <button
             type="submit"
             disabled={isSubmitting}
-            onClick={() => console.log('SignInModal: Button clicked', { isSubmitting, email, name })}
+            onClick={(e) => {
+              console.log('SignInModal: Button clicked', { isSubmitting, email, name, disabled: isSubmitting })
+              alert('Button clicked!') // Simple test
+              if (isSubmitting) {
+                e.preventDefault()
+                return
+              }
+            }}
             className="w-full bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
           >
             {isSubmitting ? (
