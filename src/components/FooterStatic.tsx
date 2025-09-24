@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Zap, Mail, Twitter, Github, Linkedin } from 'lucide-react'
+import { Zap, Mail, Facebook } from 'lucide-react'
 
 interface FooterStaticProps {
   lang: string
@@ -45,9 +45,11 @@ export default function FooterStatic({ lang }: FooterStaticProps) {
   }
 
   const socialLinks = [
-    { name: 'Twitter', href: '#', icon: Twitter },
-    { name: 'GitHub', href: '#', icon: Github },
-    { name: 'LinkedIn', href: '#', icon: Linkedin },
+    { 
+      name: 'Facebook Community', 
+      href: 'https://www.facebook.com/share/g/1Ak4MKnUBB/?mibextid=NSMWBT', 
+      icon: Facebook 
+    },
   ]
 
   return (
@@ -69,11 +71,29 @@ export default function FooterStatic({ lang }: FooterStaticProps) {
             <div className="flex space-x-4">
               {socialLinks.map((social) => {
                 const Icon = social.icon
+                const isExternal = social.href.startsWith('http')
+                
+                if (isExternal) {
+                  return (
+                    <a
+                      key={social.name}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-400 hover:text-white transition-colors"
+                      aria-label={social.name}
+                    >
+                      <Icon className="h-5 w-5" />
+                    </a>
+                  )
+                }
+                
                 return (
                   <Link
                     key={social.name}
                     href={social.href}
                     className="text-gray-400 hover:text-white transition-colors"
+                    aria-label={social.name}
                   >
                     <Icon className="h-5 w-5" />
                   </Link>
