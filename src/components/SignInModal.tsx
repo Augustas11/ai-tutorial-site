@@ -71,6 +71,7 @@ export default function SignInModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    console.log('SignInModal: Form submitted', { email, name, isSubmitting })
     setError('')
     setIsSubmitting(true)
 
@@ -84,7 +85,9 @@ export default function SignInModal({
         throw new Error(isVietnamese ? 'Email không hợp lệ' : 'Please enter a valid email')
       }
 
+      console.log('SignInModal: Calling login function')
       await login(email.trim(), name.trim() || undefined)
+      console.log('SignInModal: Login successful')
       
       // Close modal after successful login
       onClose()
@@ -106,7 +109,12 @@ export default function SignInModal({
     onClose()
   }
 
-  if (!isOpen) return null
+  if (!isOpen) {
+    console.log('SignInModal: Not open')
+    return null
+  }
+  
+  console.log('SignInModal: Rendering modal', { isOpen, user, isSubmitting })
 
   if (isLoading) {
     return (
@@ -279,6 +287,7 @@ export default function SignInModal({
           <button
             type="submit"
             disabled={isSubmitting}
+            onClick={() => console.log('SignInModal: Button clicked', { isSubmitting, email, name })}
             className="w-full bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
           >
             {isSubmitting ? (
