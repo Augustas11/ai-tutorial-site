@@ -31,7 +31,7 @@ export default function NewsletterSignupStatic({ lang }: NewsletterSignupStaticP
   const t = content[isVietnamese ? 'vn' : 'en']
 
   return (
-    <section className="py-20 bg-primary-600">
+    <section id="newsletter" className="py-20 bg-primary-600">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="mb-8">
           <div className="flex justify-center mb-4">

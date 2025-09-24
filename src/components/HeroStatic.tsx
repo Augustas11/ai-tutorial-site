@@ -35,7 +35,7 @@ export default function HeroStatic({ lang }: HeroStaticProps) {
   const t = content[isVietnamese ? 'vn' : 'en']
 
   return (
-    <section className="bg-gradient-to-br from-primary-50 to-blue-50 py-20">
+    <section id="hero" className="bg-gradient-to-br from-primary-50 to-blue-50 py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <div className="flex justify-center mb-6">
