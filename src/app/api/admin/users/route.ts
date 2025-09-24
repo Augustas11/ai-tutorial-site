@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { UserStorage } from '@/lib/auth'
-import { calculateStreak } from '@/lib/streak'
+import { calculateStreak, getStreakBonusPoints } from '@/lib/streak'
 
 // In-memory storage for development
 const userStorage = UserStorage.getInstance()
@@ -23,6 +23,7 @@ export async function GET(request: NextRequest) {
     const usersWithStreak = allUsers.map(user => {
       const activities = userStorage.getUserActivities(user.id)
       const streakData = calculateStreak(activities, 'overall')
+      const streakBonus = getStreakBonusPoints(streakData.currentStreak)
       
       return {
         id: user.id,
@@ -35,7 +36,7 @@ export async function GET(request: NextRequest) {
         streakData: {
           currentStreak: streakData.currentStreak,
           longestStreak: streakData.longestStreak,
-          streakBonus: streakData.streakBonus,
+          streakBonus: streakBonus,
           isActive: streakData.isActive
         }
       }
