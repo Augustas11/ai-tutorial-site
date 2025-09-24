@@ -2,8 +2,10 @@
 
 import { useState } from 'react'
 import { Mail, CheckCircle } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function NewsletterSignup() {
+  const { t } = useLanguage()
   const [email, setEmail] = useState('')
   const [isSubscribed, setIsSubscribed] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -26,10 +28,10 @@ export default function NewsletterSignup() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <CheckCircle className="h-16 w-16 text-white mx-auto mb-6" />
           <h2 className="text-3xl font-bold text-white mb-4">
-            Welcome to our community!
+            {t('newsletter.success.title')}
           </h2>
           <p className="text-xl text-primary-100">
-            You'll receive our weekly AI insights and tutorials directly in your inbox.
+            {t('newsletter.success.description')}
           </p>
         </div>
       </section>
@@ -40,10 +42,10 @@ export default function NewsletterSignup() {
     <section className="py-20 bg-primary-600">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-          Stay Updated with AI
+          {t('newsletter.title')}
         </h2>
         <p className="text-xl text-primary-100 mb-8">
-          Get weekly tutorials, AI news, and exclusive resources delivered to your inbox.
+          {t('newsletter.description')}
         </p>
         
         <form onSubmit={handleSubmit} className="max-w-md mx-auto">
@@ -54,7 +56,7 @@ export default function NewsletterSignup() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
+                placeholder={t('newsletter.placeholder')}
                 className="w-full pl-10 pr-4 py-3 rounded-lg border-0 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-primary-300 focus:outline-none"
                 required
               />
@@ -64,13 +66,13 @@ export default function NewsletterSignup() {
               disabled={isLoading}
               className="px-8 py-3 bg-white text-primary-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? 'Subscribing...' : 'Subscribe'}
+              {isLoading ? t('newsletter.subscribing') : t('newsletter.subscribe')}
             </button>
           </div>
         </form>
         
         <p className="text-primary-200 text-sm mt-4">
-          Join 10,000+ AI enthusiasts. No spam, unsubscribe anytime.
+          {t('newsletter.disclaimer')}
         </p>
       </div>
     </section>

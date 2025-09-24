@@ -1,51 +1,54 @@
 import Link from 'next/link'
 import { Wrench, Image, Code, Zap, ArrowRight } from 'lucide-react'
-
-const tools = [
-  {
-    id: 1,
-    title: 'AI Prompt Builder',
-    description: 'Create perfect prompts for any AI model with our interactive builder.',
-    icon: Wrench,
-    href: '/tools/prompt-builder',
-    color: 'bg-blue-100 text-blue-600'
-  },
-  {
-    id: 2,
-    title: 'Image Generator',
-    description: 'Generate stunning images using AI with our easy-to-use tool.',
-    icon: Image,
-    href: '/tools/image-generator',
-    color: 'bg-purple-100 text-purple-600'
-  },
-  {
-    id: 3,
-    title: 'Code Assistant',
-    description: 'Get AI-powered code suggestions and debugging help.',
-    icon: Code,
-    href: '/tools/code-assistant',
-    color: 'bg-green-100 text-green-600'
-  },
-  {
-    id: 4,
-    title: 'Automation Hub',
-    description: 'Discover and use pre-built AI automation workflows.',
-    icon: Zap,
-    href: '/tools/automation-hub',
-    color: 'bg-orange-100 text-orange-600'
-  }
-]
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function ToolsSection() {
+  const { t } = useLanguage()
+
+  const tools = [
+    {
+      id: 1,
+      title: t('tools.promptBuilder.title'),
+      description: t('tools.promptBuilder.desc'),
+      icon: Wrench,
+      href: '/tools/prompt-builder',
+      color: 'bg-blue-100 text-blue-600'
+    },
+    {
+      id: 2,
+      title: t('tools.imageGen.title'),
+      description: t('tools.imageGen.desc'),
+      icon: Image,
+      href: '/tools/image-generator',
+      color: 'bg-purple-100 text-purple-600'
+    },
+    {
+      id: 3,
+      title: t('tools.codeAssistant.title'),
+      description: t('tools.codeAssistant.desc'),
+      icon: Code,
+      href: '/tools/code-assistant',
+      color: 'bg-green-100 text-green-600'
+    },
+    {
+      id: 4,
+      title: t('tools.automation.title'),
+      description: t('tools.automation.desc'),
+      icon: Zap,
+      href: '/tools/automation-hub',
+      color: 'bg-orange-100 text-orange-600'
+    }
+  ]
+
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            AI Tools & Resources
+            {t('tools.title')}
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Access powerful AI tools and resources to accelerate your learning and productivity.
+            {t('tools.description')}
           </p>
         </div>
 
@@ -73,7 +76,7 @@ export default function ToolsSection() {
                 </p>
                 
                 <div className="flex items-center text-primary-600 font-medium text-sm group-hover:text-primary-700">
-                  Try Now
+                  {t('tools.tryNow')}
                   <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
@@ -86,7 +89,7 @@ export default function ToolsSection() {
             href="/tools"
             className="inline-flex items-center px-6 py-3 border border-primary-600 text-primary-600 font-semibold rounded-lg hover:bg-primary-600 hover:text-white transition-colors"
           >
-            Explore All Tools
+            {t('tools.exploreAll')}
             <ArrowRight className="h-5 w-5 ml-2" />
           </Link>
         </div>

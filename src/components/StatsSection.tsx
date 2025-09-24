@@ -1,33 +1,36 @@
 import { Users, BookOpen, Zap, Award } from 'lucide-react'
-
-const stats = [
-  {
-    icon: Users,
-    value: '10,000+',
-    label: 'Active Learners',
-    description: 'Join our growing community'
-  },
-  {
-    icon: BookOpen,
-    value: '100+',
-    label: 'Tutorials',
-    description: 'Comprehensive AI guides'
-  },
-  {
-    icon: Zap,
-    value: '50+',
-    label: 'AI Tools',
-    description: 'Ready-to-use resources'
-  },
-  {
-    icon: Award,
-    value: '95%',
-    label: 'Success Rate',
-    description: 'Students land AI jobs'
-  }
-]
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function StatsSection() {
+  const { t } = useLanguage()
+
+  const stats = [
+    {
+      icon: Users,
+      value: '10,000+',
+      label: t('stats.learners'),
+      description: t('stats.learnersDesc')
+    },
+    {
+      icon: BookOpen,
+      value: '100+',
+      label: t('stats.tutorials'),
+      description: t('stats.tutorialsDesc')
+    },
+    {
+      icon: Zap,
+      value: '50+',
+      label: t('stats.tools'),
+      description: t('stats.toolsDesc')
+    },
+    {
+      icon: Award,
+      value: '95%',
+      label: t('stats.success'),
+      description: t('stats.successDesc')
+    }
+  ]
+
   return (
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

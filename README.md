@@ -119,3 +119,4 @@ colors: {
 
 MIT License - feel free to use this project for your own AI tutorial website!
 
+

@@ -1,49 +1,52 @@
 import Link from 'next/link'
 import { Clock, User, ArrowRight, BookOpen } from 'lucide-react'
-
-const tutorials = [
-  {
-    id: 1,
-    title: 'Getting Started with ChatGPT',
-    description: 'Learn the fundamentals of prompt engineering and how to get the best results from ChatGPT.',
-    duration: '15 min read',
-    author: 'AI Expert',
-    category: 'Beginner',
-    image: '/api/placeholder/400/200',
-    href: '/tutorials/chatgpt-basics'
-  },
-  {
-    id: 2,
-    title: 'Building AI-Powered Web Apps',
-    description: 'Create interactive web applications using AI APIs and modern frameworks.',
-    duration: '25 min read',
-    author: 'Dev Team',
-    category: 'Intermediate',
-    image: '/api/placeholder/400/200',
-    href: '/tutorials/ai-web-apps'
-  },
-  {
-    id: 3,
-    title: 'Advanced Prompt Engineering',
-    description: 'Master advanced techniques for creating complex, multi-step AI prompts.',
-    duration: '30 min read',
-    author: 'AI Expert',
-    category: 'Advanced',
-    image: '/api/placeholder/400/200',
-    href: '/tutorials/advanced-prompts'
-  }
-]
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function FeaturedTutorials() {
+  const { t } = useLanguage()
+
+  const tutorials = [
+    {
+      id: 1,
+      title: t('tutorials.chatgpt.title'),
+      description: t('tutorials.chatgpt.desc'),
+      duration: `15 ${t('common.minRead')}`,
+      author: t('common.author'),
+      category: t('tutorials.beginner'),
+      image: '/api/placeholder/400/200',
+      href: '/tutorials/chatgpt-basics'
+    },
+    {
+      id: 2,
+      title: t('tutorials.webapps.title'),
+      description: t('tutorials.webapps.desc'),
+      duration: `25 ${t('common.minRead')}`,
+      author: t('common.devTeam'),
+      category: t('tutorials.intermediate'),
+      image: '/api/placeholder/400/200',
+      href: '/tutorials/ai-web-apps'
+    },
+    {
+      id: 3,
+      title: t('tutorials.prompts.title'),
+      description: t('tutorials.prompts.desc'),
+      duration: `30 ${t('common.minRead')}`,
+      author: t('common.author'),
+      category: t('tutorials.advanced'),
+      image: '/api/placeholder/400/200',
+      href: '/tutorials/advanced-prompts'
+    }
+  ]
+
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Featured Tutorials
+            {t('tutorials.title')}
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Start your AI journey with our most popular tutorials, designed for all skill levels.
+            {t('tutorials.description')}
           </p>
         </div>
 
@@ -86,7 +89,7 @@ export default function FeaturedTutorials() {
                     href={tutorial.href}
                     className="flex items-center text-primary-600 hover:text-primary-700 font-medium"
                   >
-                    Read More
+                    {t('tutorials.readMore')}
                     <ArrowRight className="h-4 w-4 ml-1" />
                   </Link>
                 </div>
@@ -100,7 +103,7 @@ export default function FeaturedTutorials() {
             href="/tutorials"
             className="inline-flex items-center px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors"
           >
-            View All Tutorials
+            {t('tutorials.viewAll')}
             <ArrowRight className="h-5 w-5 ml-2" />
           </Link>
         </div>

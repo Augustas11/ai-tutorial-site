@@ -3,14 +3,17 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { Menu, X, Zap, BookOpen, Wrench, Users } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
+import LanguageSwitcher from './LanguageSwitcher'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { t } = useLanguage()
 
   const navigation = [
-    { name: 'Tutorials', href: '/tutorials', icon: BookOpen },
-    { name: 'Tools', href: '/tools', icon: Wrench },
-    { name: 'Community', href: '/community', icon: Users },
+    { name: t('nav.tutorials'), href: '/tutorials', icon: BookOpen },
+    { name: t('nav.tools'), href: '/tools', icon: Wrench },
+    { name: t('nav.community'), href: '/community', icon: Users },
   ]
 
   return (
@@ -44,17 +47,18 @@ export default function Header() {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center space-x-4">
+            <LanguageSwitcher />
             <Link
               href="/newsletter"
               className="text-gray-700 hover:text-primary-600 transition-colors"
             >
-              Newsletter
+              {t('nav.newsletter')}
             </Link>
             <Link
               href="/get-started"
               className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors"
             >
-              Get Started
+              {t('nav.getStarted')}
             </Link>
           </div>
 
@@ -88,19 +92,22 @@ export default function Header() {
                 )
               })}
               <div className="pt-4 space-y-2">
+                <div className="px-3 py-2">
+                  <LanguageSwitcher />
+                </div>
                 <Link
                   href="/newsletter"
                   className="block px-3 py-2 text-gray-700 hover:text-primary-600"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  Newsletter
+                  {t('nav.newsletter')}
                 </Link>
                 <Link
                   href="/get-started"
                   className="block px-3 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  Get Started
+                  {t('nav.getStarted')}
                 </Link>
               </div>
             </div>

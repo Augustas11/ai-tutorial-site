@@ -1,34 +1,37 @@
 import Link from 'next/link'
 import { Zap, Mail, Twitter, Github, Linkedin } from 'lucide-react'
-
-const footerLinks = {
-  learn: [
-    { name: 'Tutorials', href: '/tutorials' },
-    { name: 'AI Tools', href: '/tools' },
-    { name: 'Resources', href: '/resources' },
-    { name: 'Community', href: '/community' },
-  ],
-  support: [
-    { name: 'Help Center', href: '/help' },
-    { name: 'Contact Us', href: '/contact' },
-    { name: 'FAQ', href: '/faq' },
-    { name: 'Status', href: '/status' },
-  ],
-  company: [
-    { name: 'About', href: '/about' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Careers', href: '/careers' },
-    { name: 'Privacy', href: '/privacy' },
-  ],
-}
-
-const socialLinks = [
-  { name: 'Twitter', href: '#', icon: Twitter },
-  { name: 'GitHub', href: '#', icon: Github },
-  { name: 'LinkedIn', href: '#', icon: Linkedin },
-]
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function Footer() {
+  const { t } = useLanguage()
+
+  const footerLinks = {
+    learn: [
+      { name: t('nav.tutorials'), href: '/tutorials' },
+      { name: t('nav.tools'), href: '/tools' },
+      { name: 'Resources', href: '/resources' },
+      { name: t('nav.community'), href: '/community' },
+    ],
+    support: [
+      { name: 'Help Center', href: '/help' },
+      { name: 'Contact Us', href: '/contact' },
+      { name: 'FAQ', href: '/faq' },
+      { name: 'Status', href: '/status' },
+    ],
+    company: [
+      { name: 'About', href: '/about' },
+      { name: 'Blog', href: '/blog' },
+      { name: 'Careers', href: '/careers' },
+      { name: 'Privacy', href: '/privacy' },
+    ],
+  }
+
+  const socialLinks = [
+    { name: 'Twitter', href: '#', icon: Twitter },
+    { name: 'GitHub', href: '#', icon: Github },
+    { name: 'LinkedIn', href: '#', icon: Linkedin },
+  ]
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -61,7 +64,7 @@ export default function Footer() {
 
           {/* Learn */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Learn</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('footer.learn')}</h3>
             <ul className="space-y-2">
               {footerLinks.learn.map((link) => (
                 <li key={link.name}>
@@ -78,7 +81,7 @@ export default function Footer() {
 
           {/* Support */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Support</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('footer.support')}</h3>
             <ul className="space-y-2">
               {footerLinks.support.map((link) => (
                 <li key={link.name}>
@@ -95,7 +98,7 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Company</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('footer.company')}</h3>
             <ul className="space-y-2">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
@@ -114,11 +117,11 @@ export default function Footer() {
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm">
-              © 2024 AI Tutorial Hub. All rights reserved.
+              {t('footer.copyright')}
             </p>
             <div className="flex items-center space-x-1 text-gray-400 text-sm mt-4 md:mt-0">
               <Mail className="h-4 w-4" />
-              <span>hello@aitutorialhub.com</span>
+              <span>{t('footer.email')}</span>
             </div>
           </div>
         </div>
