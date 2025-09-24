@@ -16,7 +16,8 @@ export async function POST(request: NextRequest) {
     console.log('Environment check:', {
       hasApiKey: !!DEEPSEEK_API_KEY,
       keyLength: DEEPSEEK_API_KEY?.length,
-      nodeEnv: process.env.NODE_ENV
+      nodeEnv: process.env.NODE_ENV,
+      allEnvKeys: Object.keys(process.env).filter(key => key.includes('DEEPSEEK'))
     })
     
     if (!DEEPSEEK_API_KEY) {
