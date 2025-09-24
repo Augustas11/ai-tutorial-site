@@ -5,6 +5,7 @@ A modern, responsive website similar to sabrina.dev, built with Next.js 14, Type
 ## Features
 
 - 🎯 **Modern Design**: Clean, professional UI with responsive layout
+- 🌍 **Multilingual Support**: English and Vietnamese language switching
 - 📚 **Tutorial System**: Featured tutorials with categories and difficulty levels
 - 🛠️ **AI Tools Section**: Interactive tools and resources
 - 📧 **Newsletter Signup**: Email subscription with success states
