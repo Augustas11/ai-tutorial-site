@@ -2,6 +2,7 @@
 
 import { useAuth } from '@/contexts/AuthContext'
 import { useState } from 'react'
+import SignInModal from './SignInModal'
 
 export default function AuthDebug() {
   const { user, session, login, loginAsGuest, logout, isLoading } = useAuth()
@@ -9,6 +10,7 @@ export default function AuthDebug() {
   const [name, setName] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
+  const [showSignInModal, setShowSignInModal] = useState(false)
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -54,7 +56,9 @@ export default function AuthDebug() {
       <div className="text-xs mb-4">
         <p><strong>Loading:</strong> {isLoading ? 'Yes' : 'No'}</p>
         <p><strong>User:</strong> {user ? `${user.email || 'Guest'} (${user.isGuest ? 'Guest' : 'Registered'})` : 'None'}</p>
+        <p><strong>User ID:</strong> {user?.id || 'None'}</p>
         <p><strong>Session:</strong> {session ? session.sessionId.substring(0, 8) + '...' : 'None'}</p>
+        <p><strong>User Object:</strong> {JSON.stringify(user, null, 2)}</p>
       </div>
 
       <form onSubmit={handleLogin} className="space-y-2 mb-4">
@@ -84,6 +88,12 @@ export default function AuthDebug() {
 
       <div className="space-y-1">
         <button
+          onClick={() => setShowSignInModal(true)}
+          className="w-full bg-green-500 text-white py-1 px-2 rounded text-xs"
+        >
+          Test Sign-In Modal
+        </button>
+        <button
           onClick={handleGuestLogin}
           className="w-full bg-gray-500 text-white py-1 px-2 rounded text-xs"
         >
@@ -96,6 +106,14 @@ export default function AuthDebug() {
           Logout
         </button>
       </div>
+      
+      <SignInModal
+        isOpen={showSignInModal}
+        onClose={() => setShowSignInModal(false)}
+        lang="en"
+        title="Test Sign-In Modal"
+        subtitle="Testing the sign-in modal functionality"
+      />
 
       {error && (
         <div className="text-red-500 text-xs mt-2">
