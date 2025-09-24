@@ -225,6 +225,10 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
                 )
               })}
               <div className="pt-4 space-y-2">
+                {/* Streak Display for Mobile */}
+                <div className="px-3 py-2">
+                  <StreakHeader userId="default-user" refreshTrigger={refreshTrigger} lang={lang} />
+                </div>
                 <div className="px-3 py-2">
                   <div className="flex items-center space-x-2 text-gray-700">
                     <Globe className="h-4 w-4" />
