@@ -58,6 +58,7 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
 
   const fetchStreakData = async () => {
     try {
+      console.log('StreakHeader: Fetching streak data for user:', currentUserId)
       const params = new URLSearchParams({
         userId: currentUserId,
         type: 'overall'
@@ -67,11 +68,17 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
         params.append('sessionId', session.sessionId)
       }
       
+      console.log('StreakHeader: API URL:', `/api/streak?${params}`)
       const response = await fetch(`/api/streak?${params}`)
       const result = await response.json()
       
+      console.log('StreakHeader: API response:', result)
+      
       if (result.success) {
         setStreakData(result.data)
+        console.log('StreakHeader: Streak data set:', result.data)
+      } else {
+        console.error('StreakHeader: API returned error:', result.error)
       }
     } catch (err) {
       console.error('Failed to load streak data:', err)

@@ -1,9 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Flame, Trophy, Star, Target, Zap, BookOpen, MessageCircle, Mail } from 'lucide-react'
+import { Flame, Trophy, Star, Target, Zap, BookOpen, MessageCircle, Mail, Home } from 'lucide-react'
 import StreakWidget from './StreakWidget'
 import StreakNotification, { useStreakNotifications } from './StreakNotification'
+import Link from 'next/link'
 
 interface UserDashboardProps {
   lang: string
@@ -61,6 +62,7 @@ export default function UserDashboard({ lang, userId = 'default-user' }: UserDas
     en: {
       title: 'My Streaks & Progress',
       subtitle: 'Track your learning streaks, points, and achievements',
+      home: 'Home',
       stats: {
         tutorials: 'Tutorials Completed',
         chatMessages: 'AI Chat Messages',
@@ -83,6 +85,7 @@ export default function UserDashboard({ lang, userId = 'default-user' }: UserDas
     vn: {
       title: 'Hệ Thống Streak & Tiến Độ',
       subtitle: 'Theo dõi chuỗi học tập, điểm số và thành tích của bạn',
+      home: 'Trang chủ',
       stats: {
         tutorials: 'Hướng dẫn đã hoàn thành',
         chatMessages: 'Tin nhắn AI Chat',
@@ -167,12 +170,23 @@ export default function UserDashboard({ lang, userId = 'default-user' }: UserDas
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            {t.title}
-          </h1>
-          <p className="text-gray-600">
-            {t.subtitle}
-          </p>
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                {t.title}
+              </h1>
+              <p className="text-gray-600">
+                {t.subtitle}
+              </p>
+            </div>
+            <Link 
+              href={`/${lang}`}
+              className="inline-flex items-center space-x-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+            >
+              <Home className="h-4 w-4" />
+              <span>{t.home}</span>
+            </Link>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
