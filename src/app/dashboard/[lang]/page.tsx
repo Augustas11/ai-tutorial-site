@@ -37,8 +37,4 @@ export default function DashboardPage({ params }: { params: { lang: string } }) 
   )
 }
 
-export function generateStaticParams() {
-  return supportedLanguages.map((lang) => ({
-    lang,
-  }))
-}
+// generateStaticParams removed because we're using 'use client' for authentication
