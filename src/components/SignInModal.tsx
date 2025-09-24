@@ -75,6 +75,7 @@ export default function SignInModal({
     setIsSubmitting(true)
 
     try {
+      console.log('SignInModal: Starting validation')
       if (!email.trim()) {
         throw new Error(isVietnamese ? 'Vui lòng nhập email' : 'Please enter your email')
       }
@@ -84,7 +85,9 @@ export default function SignInModal({
         throw new Error(isVietnamese ? 'Email không hợp lệ' : 'Please enter a valid email')
       }
 
-      console.log('SignInModal: Calling login function')
+      console.log('SignInModal: Validation passed, calling login function')
+      console.log('SignInModal: Login function available?', typeof login)
+      
       await login(email.trim(), name.trim() || undefined)
       console.log('SignInModal: Login successful')
       
@@ -94,6 +97,7 @@ export default function SignInModal({
       console.error('SignInModal: Login error', err)
       setError(err instanceof Error ? err.message : t.error)
     } finally {
+      console.log('SignInModal: Setting isSubmitting to false')
       setIsSubmitting(false)
     }
   }
