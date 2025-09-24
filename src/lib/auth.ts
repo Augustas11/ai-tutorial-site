@@ -162,6 +162,26 @@ export class UserStorage {
   deleteUser(userId: string): boolean {
     return this.users.delete(userId)
   }
+
+  // Activity tracking methods
+  recordActivity(userId: string, activityType: string, pointsEarned: number = 0): void {
+    const user = this.users.get(userId)
+    if (user) {
+      // For now, we'll just update the lastActiveAt timestamp
+      // In a real app, you'd store this in a separate activities table
+      user.lastActiveAt = new Date()
+      this.users.set(userId, user)
+    }
+  }
+
+  getUserActivities(userId: string): Date[] {
+    const user = this.users.get(userId)
+    if (!user) return []
+    
+    // For now, return a simple array with the last active date
+    // In a real app, you'd query the activities table
+    return user.lastActiveAt ? [user.lastActiveAt] : []
+  }
 }
 
 // Authentication context for React components

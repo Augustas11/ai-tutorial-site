@@ -57,12 +57,15 @@ export default function StreakWidget({
 
   const fetchStreakData = async () => {
     if (!currentUserId) {
+      console.log('StreakWidget: No currentUserId, skipping fetch')
       setLoading(false)
       return
     }
     
     try {
       setLoading(true)
+      console.log('StreakWidget: Fetching streak data', { currentUserId, user: user?.id, session: session?.sessionId })
+      
       const params = new URLSearchParams({
         userId: currentUserId,
         type: streakType
@@ -74,6 +77,8 @@ export default function StreakWidget({
       
       const response = await fetch(`/api/streak?${params}`)
       const result = await response.json()
+      
+      console.log('StreakWidget: Streak data response', result)
       
       if (result.success) {
         setStreakData(result.data)

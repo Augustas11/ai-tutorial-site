@@ -54,10 +54,12 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
 
   useEffect(() => {
     fetchStreakData()
-  }, [currentUserId, refreshTrigger, lang])
+  }, [currentUserId, refreshTrigger, lang, user?.id, session?.sessionId])
 
   const fetchStreakData = async () => {
     try {
+      console.log('StreakHeader: Fetching streak data', { currentUserId, user: user?.id, session: session?.sessionId })
+      
       const params = new URLSearchParams({
         userId: currentUserId,
         type: 'overall'
@@ -69,6 +71,8 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
       
       const response = await fetch(`/api/streak?${params}`)
       const result = await response.json()
+      
+      console.log('StreakHeader: Streak data response', result)
       
       if (result.success) {
         setStreakData(result.data)

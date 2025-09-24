@@ -3,7 +3,6 @@ import { calculateStreak, getStreakBonusPoints, getUnlockedMilestones, STREAK_MI
 import { SessionManager, UserStorage } from '@/lib/auth'
 
 // In-memory storage for development (replace with database in production)
-const userActivities = new Map<string, Date[]>()
 const sessionManager = SessionManager.getInstance()
 const userStorage = UserStorage.getInstance()
 
@@ -26,10 +25,12 @@ export async function GET(request: NextRequest) {
     }
 
     // Get user activities
-    const activities = userActivities.get(userId) || []
+    const activities = userStorage.getUserActivities(userId)
+    console.log('Streak API: User activities', { userId, activities })
     
     // Calculate streak data
     const streakData = calculateStreak(activities, streakType)
+    console.log('Streak API: Calculated streak data', streakData)
     
     // Get unlocked milestones
     const unlockedMilestones = getUnlockedMilestones(streakData.currentStreak)
@@ -78,18 +79,11 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Record activity
-    const today = new Date()
-    const activities = userActivities.get(userId) || []
+    // Record activity using userStorage
+    userStorage.recordActivity(userId, activityType, pointsEarned)
     
-    // Add today's activity if not already recorded
-    const todayStr = today.toDateString()
-    const hasTodayActivity = activities.some(date => date.toDateString() === todayStr)
-    
-    if (!hasTodayActivity) {
-      activities.push(today)
-      userActivities.set(userId, activities)
-    }
+    // Get updated activities
+    const activities = userStorage.getUserActivities(userId)
 
     // Calculate new streak data
     const streakData = calculateStreak(activities)
