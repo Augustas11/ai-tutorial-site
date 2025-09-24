@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Flame, Trophy, Star, Target, Zap } from 'lucide-react'
+import { useStreakNotifications } from './StreakNotification'
 
 interface StreakData {
   currentStreak: number
@@ -38,6 +39,7 @@ export default function StreakWidget({
   const [streakData, setStreakData] = useState<StreakData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const { addNotification } = useStreakNotifications()
 
   useEffect(() => {
     fetchStreakData()
@@ -79,6 +81,14 @@ export default function StreakWidget({
       
       if (result.success) {
         setStreakData(result.data.streakData)
+        
+        // Show milestone notifications
+        if (result.data.newMilestones?.length > 0) {
+          result.data.newMilestones.forEach((milestone: any) => {
+            addNotification(milestone)
+          })
+        }
+        
         return result.data
       } else {
         throw new Error(result.error)

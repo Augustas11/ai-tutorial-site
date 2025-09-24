@@ -13,15 +13,16 @@ interface StreakData {
 interface StreakHeaderProps {
   userId?: string
   className?: string
+  refreshTrigger?: number
 }
 
-export default function StreakHeader({ userId = 'default-user', className = '' }: StreakHeaderProps) {
+export default function StreakHeader({ userId = 'default-user', className = '', refreshTrigger }: StreakHeaderProps) {
   const [streakData, setStreakData] = useState<StreakData | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     fetchStreakData()
-  }, [userId])
+  }, [userId, refreshTrigger])
 
   const fetchStreakData = async () => {
     try {

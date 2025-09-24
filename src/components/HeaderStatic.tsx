@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Zap, BookOpen, Wrench, Users, Globe, Menu, X, BarChart3 } from 'lucide-react'
 import StreakHeader from './StreakHeader'
 
@@ -11,6 +11,7 @@ interface HeaderStaticProps {
 
 export default function HeaderStatic({ lang }: HeaderStaticProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [refreshTrigger, setRefreshTrigger] = useState(0)
   const isVietnamese = lang === 'vn'
   
   const navigation = [
@@ -26,7 +27,7 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
     },
     { 
       name: isVietnamese ? 'Bảng điều khiển' : 'Dashboard', 
-      href: `/${lang}/dashboard`, 
+      href: `/dashboard/${lang}`, 
       icon: BarChart3 
     },
     { 
@@ -38,6 +39,15 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
 
   const brandName = isVietnamese ? 'Trường Sáng Tạo AI' : 'AI Creator School'
   const subscribeText = isVietnamese ? 'Đăng ký' : 'Subscribe'
+
+  // Refresh streak data every 30 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRefreshTrigger(prev => prev + 1)
+    }, 30000)
+
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <header className="bg-white shadow-sm border-b">
@@ -102,7 +112,7 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
           {/* CTA Button */}
           <div className="hidden md:flex items-center space-x-4">
             {/* Streak Display */}
-            <StreakHeader userId="default-user" />
+            <StreakHeader userId="default-user" refreshTrigger={refreshTrigger} />
             
             <div className="relative group">
               <button className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors">
