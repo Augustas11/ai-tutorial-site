@@ -70,25 +70,42 @@ export default function SignInModal({
   const t = content[isVietnamese ? 'vn' : 'en']
 
   const handleSubmit = async () => {
-    console.log('SignInModal: Form submitted', { email, name, isSubmitting })
+    console.log('=== SIGNIN MODAL DEBUG ===')
+    console.log('SignInModal: Form submitted', { 
+      email, 
+      name, 
+      isSubmitting,
+      emailType: typeof email,
+      nameType: typeof name,
+      emailLength: email?.length || 0,
+      nameLength: name?.length || 0
+    })
     setError('')
     setIsSubmitting(true)
 
     try {
       console.log('SignInModal: Starting validation')
-      if (!email.trim()) {
+      console.log('Email value:', `"${email}"`)
+      console.log('Email trimmed:', `"${email?.trim() || ''}"`)
+      
+      if (!email || !email.trim()) {
+        console.log('ERROR: Email is empty or undefined')
         throw new Error(isVietnamese ? 'Vui lòng nhập email' : 'Please enter your email')
       }
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-      if (!emailRegex.test(email)) {
+      const isValidEmail = emailRegex.test(email)
+      console.log('Email validation result:', isValidEmail)
+      
+      if (!isValidEmail) {
+        console.log('ERROR: Email format is invalid')
         throw new Error(isVietnamese ? 'Email không hợp lệ' : 'Please enter a valid email')
       }
 
       console.log('SignInModal: Validation passed, calling login function')
       console.log('SignInModal: Login function available?', typeof login)
       
-      await login(email.trim(), name.trim() || undefined)
+      await login(email.trim(), name?.trim() || undefined)
       console.log('SignInModal: Login successful')
       
       // Close modal after successful login
@@ -364,6 +381,15 @@ export default function SignInModal({
         </div>
 
             <div className="mt-6 pt-4 border-t border-gray-200">
+              <button
+                onClick={() => {
+                  console.log('TEST: Current form state:', { email, name })
+                  alert(`TEST: Email="${email}", Name="${name}"`)
+                }}
+                className="w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors mb-2"
+              >
+                TEST FORM STATE
+              </button>
               <button
                 onClick={() => {
                   console.log('Guest button clicked!')
