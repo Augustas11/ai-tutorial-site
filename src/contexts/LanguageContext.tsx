@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState, ReactNode } from 'react'
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react'
 
 export type Language = 'en' | 'vi'
 
@@ -184,13 +184,34 @@ const translations = {
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>('en')
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+    // Load language from localStorage after mounting
+    const savedLanguage = localStorage.getItem('language') as Language
+    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'vi')) {
+      setLanguage(savedLanguage)
+    }
+  }, [])
 
   const t = (key: string): string => {
+    if (!mounted) {
+      // Return English translations during SSR
+      return translations.en[key as keyof typeof translations.en] || key
+    }
     return translations[language][key as keyof typeof translations[typeof language]] || key
   }
 
+  const handleSetLanguage = (lang: Language) => {
+    setLanguage(lang)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('language', lang)
+    }
+  }
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   )
@@ -199,7 +220,12 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 export function useLanguage() {
   const context = useContext(LanguageContext)
   if (context === undefined) {
-    throw new Error('useLanguage must be used within a LanguageProvider')
+    // Return default values during SSR to prevent hydration errors
+    return {
+      language: 'en' as Language,
+      setLanguage: () => {},
+      t: (key: string) => translations.en[key as keyof typeof translations.en] || key
+    }
   }
   return context
 }
