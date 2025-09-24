@@ -1,11 +1,17 @@
+'use client'
+
 import Link from 'next/link'
-import { Zap, BookOpen, Wrench, Users, Globe } from 'lucide-react'
+import { Zap, BookOpen, Wrench, Users } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
+import LanguageSwitcher from './LanguageSwitcher'
 
 export default function Header() {
+  const { t } = useLanguage()
+
   const navigation = [
-    { name: 'Tutorials', href: '/tutorials', icon: BookOpen },
-    { name: 'Tools', href: '/tools', icon: Wrench },
-    { name: 'Community', href: '/community', icon: Users },
+    { name: t('nav.tutorials'), href: '/tutorials', icon: BookOpen },
+    { name: t('nav.tools'), href: '/tools', icon: Wrench },
+    { name: t('nav.community'), href: '/community', icon: Users },
   ]
 
   return (
@@ -16,7 +22,7 @@ export default function Header() {
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center space-x-2">
               <Zap className="h-6 w-6 text-primary-600" />
-              <span className="text-xl font-bold text-gray-900">AI Tutorial Hub</span>
+              <span className="text-xl font-bold text-gray-900">AI Creator School</span>
             </Link>
           </div>
 
@@ -39,21 +45,18 @@ export default function Header() {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center space-x-4">
-            <div className="flex items-center space-x-2 text-gray-700">
-              <Globe className="h-4 w-4" />
-              <span className="text-sm">🇺🇸</span>
-            </div>
+            <LanguageSwitcher />
             <Link
               href="/newsletter"
               className="text-gray-700 hover:text-primary-600 transition-colors"
             >
-              Newsletter
+              {t('nav.newsletter')}
             </Link>
             <Link
               href="/get-started"
               className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors"
             >
-              Get Started
+              {t('nav.getStarted')}
             </Link>
           </div>
 

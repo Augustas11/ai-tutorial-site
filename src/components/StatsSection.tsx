@@ -1,30 +1,35 @@
+'use client'
+
 import { Users, BookOpen, Zap, Award } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function StatsSection() {
+  const { t } = useLanguage()
+
   const stats = [
     {
       icon: Users,
       value: '10,000+',
-      label: 'Active Learners',
-      description: 'Join our growing community'
+      label: t('stats.learners'),
+      description: t('stats.learnersDesc')
     },
     {
       icon: BookOpen,
       value: '100+',
-      label: 'Tutorials',
-      description: 'Comprehensive AI guides'
+      label: t('stats.tutorials'),
+      description: t('stats.tutorialsDesc')
     },
     {
       icon: Zap,
       value: '50+',
-      label: 'AI Tools',
-      description: 'Ready-to-use resources'
+      label: t('stats.tools'),
+      description: t('stats.toolsDesc')
     },
     {
       icon: Award,
       value: '95%',
-      label: 'Success Rate',
-      description: 'Students land AI jobs'
+      label: t('stats.success'),
+      description: t('stats.successDesc')
     }
   ]
 
