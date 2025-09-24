@@ -41,9 +41,12 @@ export default function StreakHeader({ userId = 'default-user', className = '', 
 
   const t = content[isVietnamese ? 'vn' : 'en']
 
+  // Debug logging
+  console.log('StreakHeader - lang:', lang, 'isVietnamese:', isVietnamese, 't:', t)
+
   useEffect(() => {
     fetchStreakData()
-  }, [userId, refreshTrigger])
+  }, [userId, refreshTrigger, lang])
 
   const fetchStreakData = async () => {
     try {
