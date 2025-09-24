@@ -69,10 +69,10 @@ export default function SignInModal({
 
   const t = content[isVietnamese ? 'vn' : 'en']
 
-      const handleSubmit = async () => {
-        console.log('SignInModal: Form submitted', { email, name, isSubmitting })
-        setError('')
-        setIsSubmitting(true)
+  const handleSubmit = async () => {
+    console.log('SignInModal: Form submitted', { email, name, isSubmitting })
+    setError('')
+    setIsSubmitting(true)
 
     try {
       if (!email.trim()) {
