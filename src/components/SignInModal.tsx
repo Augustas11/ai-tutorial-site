@@ -70,51 +70,26 @@ export default function SignInModal({
   const t = content[isVietnamese ? 'vn' : 'en']
 
   const handleSubmit = async () => {
-    console.log('=== SIGNIN MODAL DEBUG ===')
-    console.log('SignInModal: Form submitted', { 
-      email, 
-      name, 
-      isSubmitting,
-      emailType: typeof email,
-      nameType: typeof name,
-      emailLength: email?.length || 0,
-      nameLength: name?.length || 0
-    })
+    console.log('SignInModal: Form submitted', { email, name, isSubmitting })
     setError('')
     setIsSubmitting(true)
 
     try {
-      console.log('SignInModal: Starting validation')
-      console.log('Email value:', `"${email}"`)
-      console.log('Email trimmed:', `"${email?.trim() || ''}"`)
-      
       if (!email || !email.trim()) {
-        console.log('ERROR: Email is empty or undefined')
         throw new Error(isVietnamese ? 'Vui lòng nhập email' : 'Please enter your email')
       }
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-      const isValidEmail = emailRegex.test(email)
-      console.log('Email validation result:', isValidEmail)
-      
-      if (!isValidEmail) {
-        console.log('ERROR: Email format is invalid')
+      if (!emailRegex.test(email)) {
         throw new Error(isVietnamese ? 'Email không hợp lệ' : 'Please enter a valid email')
       }
 
-      console.log('SignInModal: Validation passed, calling login function')
-      console.log('SignInModal: Login function available?', typeof login)
-      
       await login(email.trim(), name?.trim() || undefined)
-      console.log('SignInModal: Login successful')
-      
-      // Close modal after successful login
       onClose()
     } catch (err) {
       console.error('SignInModal: Login error', err)
       setError(err instanceof Error ? err.message : t.error)
     } finally {
-      console.log('SignInModal: Setting isSubmitting to false')
       setIsSubmitting(false)
     }
   }
@@ -307,10 +282,7 @@ export default function SignInModal({
                   <input
                     type="email"
                     value={email}
-                    onChange={(e) => {
-                      console.log('Email input changed:', e.target.value)
-                      setEmail(e.target.value)
-                    }}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                     placeholder={isVietnamese ? 'your@email.com' : 'your@email.com'}
                     required
@@ -327,10 +299,7 @@ export default function SignInModal({
                   <input
                     type="text"
                     value={name}
-                    onChange={(e) => {
-                      console.log('Name input changed:', e.target.value)
-                      setName(e.target.value)
-                    }}
+                    onChange={(e) => setName(e.target.value)}
                     className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                     placeholder={isVietnamese ? 'Tên của bạn' : 'Your name'}
                   />
@@ -345,16 +314,7 @@ export default function SignInModal({
 
               <button
                 onClick={() => {
-                  console.log('SignInModal: Button clicked!', { 
-                    isSubmitting, 
-                    email, 
-                    name, 
-                    emailLength: email.length,
-                    nameLength: name.length,
-                    emailTrimmed: email.trim(),
-                    nameTrimmed: name.trim()
-                  })
-                  alert(`Button clicked! Email: "${email}", Name: "${name}"`)
+                  console.log('SignInModal: Button clicked!', { email, name })
                   handleSubmit()
                 }}
                 disabled={isSubmitting}
