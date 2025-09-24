@@ -137,12 +137,18 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
             
             {/* User Button */}
             <button
-              onClick={() => setIsLoginModalOpen(true)}
+              onClick={() => {
+                if (user && user.isGuest) {
+                  setShowSignInModal(true)
+                } else {
+                  setIsLoginModalOpen(true)
+                }
+              }}
               className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors"
             >
               <User className="h-4 w-4" />
               <span className="text-sm">
-                {user ? (user.name || user.email) : (isVietnamese ? 'Đăng nhập' : 'Sign In')}
+                {user ? (user.isGuest ? (isVietnamese ? 'Đăng nhập' : 'Sign In') : (user.name || user.email)) : (isVietnamese ? 'Đăng nhập' : 'Sign In')}
               </span>
             </button>
             

@@ -5,6 +5,7 @@ import { Flame, Trophy, Star, Target, Zap, BookOpen, MessageCircle, Mail, Home }
 import StreakWidget from './StreakWidget'
 import StreakNotification, { useStreakNotifications } from './StreakNotification'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 interface UserDashboardProps {
   lang: string
@@ -32,6 +33,7 @@ export default function UserDashboard({ lang, userId = 'default-user' }: UserDas
   const [loading, setLoading] = useState(true)
   const isVietnamese = lang === 'vn'
   const { currentNotification, addNotification, closeNotification } = useStreakNotifications()
+  const router = useRouter()
 
   useEffect(() => {
     fetchUserStats()
@@ -207,13 +209,13 @@ export default function UserDashboard({ lang, userId = 'default-user' }: UserDas
                 {t.subtitle}
               </p>
             </div>
-            <Link 
-              href={`/${lang}`}
+            <button 
+              onClick={() => router.push(`/${lang}`)}
               className="inline-flex items-center space-x-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
             >
               <Home className="h-4 w-4" />
               <span>{t.home}</span>
-            </Link>
+            </button>
           </div>
         </div>
 
