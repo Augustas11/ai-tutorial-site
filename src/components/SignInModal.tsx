@@ -128,6 +128,7 @@ export default function SignInModal({
   }
 
   if (user && !user.isGuest) {
+    console.log('SignInModal: Showing logged-in user modal')
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div className="bg-white rounded-xl shadow-lg p-6 max-w-md mx-4 relative">
@@ -151,6 +152,8 @@ export default function SignInModal({
           <div className="space-y-3">
             <button
               onClick={() => {
+                console.log('Profile button clicked!')
+                alert('Profile button clicked!')
                 onClose()
                 window.location.href = `/dashboard/${lang}`
               }}
@@ -161,7 +164,11 @@ export default function SignInModal({
             </button>
             
             <button
-              onClick={handleLogout}
+              onClick={() => {
+                console.log('Logout button clicked!')
+                alert('Logout button clicked!')
+                handleLogout()
+              }}
               className="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center space-x-2"
             >
               <LogIn className="h-4 w-4" />
@@ -174,6 +181,7 @@ export default function SignInModal({
   }
 
   if (user && user.isGuest) {
+    console.log('SignInModal: Showing guest user modal')
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div className="bg-white rounded-xl shadow-lg p-6 max-w-md mx-4 relative">
@@ -201,7 +209,11 @@ export default function SignInModal({
 
           <div className="space-y-3">
             <button
-              onClick={() => setIsLoginMode(true)}
+              onClick={() => {
+                console.log('Guest login button clicked!')
+                alert('Guest login button clicked!')
+                setIsLoginMode(true)
+              }}
               className="w-full bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors flex items-center justify-center space-x-2"
             >
               <LogIn className="h-4 w-4" />
@@ -209,7 +221,11 @@ export default function SignInModal({
             </button>
             
             <button
-              onClick={handleGuestLogin}
+              onClick={() => {
+                console.log('Guest continue button clicked!')
+                alert('Guest continue button clicked!')
+                handleGuestLogin()
+              }}
               className="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center space-x-2"
             >
               <User className="h-4 w-4" />
@@ -221,6 +237,7 @@ export default function SignInModal({
     )
   }
 
+  console.log('SignInModal: Showing main sign-in modal')
   return (
     <div 
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" 
