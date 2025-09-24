@@ -107,9 +107,12 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
       <div className={`flex items-center space-x-2 ${className}`}>
         <button 
           onClick={() => {
+            console.log('Start Streak clicked', { user, isGuest: user?.isGuest })
             if (!user || user.isGuest) {
+              console.log('Showing sign-in modal')
               setShowSignInModal(true)
             } else {
+              console.log('Redirecting to dashboard')
               window.location.href = `/dashboard/${user?.language || lang}`
             }
           }}

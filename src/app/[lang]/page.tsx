@@ -5,6 +5,7 @@ import ToolsSectionStatic from '@/components/ToolsSectionStatic'
 import NewsletterSignupStatic from '@/components/NewsletterSignupStatic'
 import StatsSectionStatic from '@/components/StatsSectionStatic'
 import ScrollToTop from '@/components/ScrollToTop'
+import AuthDebug from '@/components/AuthDebug'
 
 const supportedLanguages = ['en', 'vn']
 
@@ -18,6 +19,7 @@ export default function LanguagePage({ params }: { params: { lang: string } }) {
   return (
     <div className="min-h-screen">
       <ScrollToTop />
+      <AuthDebug />
       <HeroStatic lang={lang} />
       <StatsSectionStatic lang={lang} />
       <FeaturedTutorialsStatic lang={lang} />

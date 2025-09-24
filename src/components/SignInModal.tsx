@@ -75,6 +75,8 @@ export default function SignInModal({
     setIsSubmitting(true)
 
     try {
+      console.log('SignInModal: Form submitted', { email, name })
+      
       if (!email.trim()) {
         throw new Error(isVietnamese ? 'Vui lòng nhập email' : 'Please enter your email')
       }
@@ -84,11 +86,14 @@ export default function SignInModal({
         throw new Error(isVietnamese ? 'Email không hợp lệ' : 'Please enter a valid email')
       }
 
-      await login(email.trim(), name.trim() || undefined)
+      console.log('SignInModal: Calling login function')
+      const userData = await login(email.trim(), name.trim() || undefined)
+      console.log('SignInModal: Login successful', userData)
       
       // Close modal after successful login
       onClose()
     } catch (err) {
+      console.error('SignInModal: Login error', err)
       setError(err instanceof Error ? err.message : t.error)
     } finally {
       setIsSubmitting(false)
@@ -105,7 +110,12 @@ export default function SignInModal({
     onClose()
   }
 
-  if (!isOpen) return null
+  if (!isOpen) {
+    console.log('SignInModal: Not open')
+    return null
+  }
+  
+  console.log('SignInModal: Rendering modal', { user, isGuest: user?.isGuest })
 
   if (isLoading) {
     return (
