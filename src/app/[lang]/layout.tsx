@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import '../globals.css'
-import { LanguageProvider } from '@/contexts/LanguageContext'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
+import HeaderStatic from '@/components/HeaderStatic'
+import FooterStatic from '@/components/FooterStatic'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -39,15 +38,13 @@ export default function LanguageLayout({
   return (
     <html lang={lang}>
       <body className={inter.className}>
-        <LanguageProvider initialLanguage={lang as 'en' | 'vn'}>
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            <main className="flex-grow">
-              {children}
-            </main>
-            <Footer />
-          </div>
-        </LanguageProvider>
+        <div className="min-h-screen flex flex-col">
+          <HeaderStatic lang={lang} />
+          <main className="flex-grow">
+            {children}
+          </main>
+          <FooterStatic lang={lang} />
+        </div>
       </body>
     </html>
   )

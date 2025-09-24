@@ -1,10 +1,9 @@
 import { notFound } from 'next/navigation'
-import Hero from '@/components/Hero'
-import FeaturedTutorials from '@/components/FeaturedTutorials'
-import ToolsSection from '@/components/ToolsSection'
-import NewsletterSignup from '@/components/NewsletterSignup'
-import StatsSection from '@/components/StatsSection'
-import { LanguageProvider } from '@/contexts/LanguageContext'
+import HeroStatic from '@/components/HeroStatic'
+import FeaturedTutorialsStatic from '@/components/FeaturedTutorialsStatic'
+import ToolsSectionStatic from '@/components/ToolsSectionStatic'
+import NewsletterSignupStatic from '@/components/NewsletterSignupStatic'
+import StatsSectionStatic from '@/components/StatsSectionStatic'
 
 const supportedLanguages = ['en', 'vn']
 
@@ -16,15 +15,13 @@ export default function LanguagePage({ params }: { params: { lang: string } }) {
   }
 
   return (
-    <LanguageProvider initialLanguage={lang as 'en' | 'vn'}>
-      <div className="min-h-screen">
-        <Hero />
-        <StatsSection />
-        <FeaturedTutorials />
-        <ToolsSection />
-        <NewsletterSignup />
-      </div>
-    </LanguageProvider>
+    <div className="min-h-screen">
+      <HeroStatic lang={lang} />
+      <StatsSectionStatic lang={lang} />
+      <FeaturedTutorialsStatic lang={lang} />
+      <ToolsSectionStatic lang={lang} />
+      <NewsletterSignupStatic lang={lang} />
+    </div>
   )
 }
 
