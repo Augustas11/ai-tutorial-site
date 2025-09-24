@@ -2,14 +2,26 @@
 
 import { useLanguage } from '@/contexts/LanguageContext'
 import { Globe } from 'lucide-react'
+import { useRouter, usePathname } from 'next/navigation'
 
 export default function LanguageSwitcher() {
-  const { language, setLanguage } = useLanguage()
+  const { language } = useLanguage()
+  const router = useRouter()
+  const pathname = usePathname()
 
   const languages = [
     { code: 'en', name: 'English', flag: '🇺🇸' },
     { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' }
   ] as const
+
+  const handleLanguageChange = (newLang: string) => {
+    // Update localStorage
+    localStorage.setItem('language', newLang)
+    
+    // Navigate to the new language route
+    const newPath = pathname.replace(/^\/[a-z]{2}/, `/${newLang}`)
+    router.push(newPath)
+  }
 
   return (
     <div className="relative group">
@@ -25,7 +37,7 @@ export default function LanguageSwitcher() {
           {languages.map((lang) => (
             <button
               key={lang.code}
-              onClick={() => setLanguage(lang.code as 'en' | 'vi')}
+              onClick={() => handleLanguageChange(lang.code)}
               className={`w-full px-4 py-2 text-left hover:bg-gray-50 transition-colors flex items-center space-x-3 ${
                 language === lang.code ? 'bg-primary-50 text-primary-600' : 'text-gray-700'
               }`}

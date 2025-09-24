@@ -22,7 +22,7 @@ export default function Header() {
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center space-x-2">
               <Zap className="h-6 w-6 text-primary-600" />
-              <span className="text-xl font-bold text-gray-900">AI Creator School</span>
+              <span className="text-xl font-bold text-gray-900">{t('common.brandName')}</span>
             </Link>
           </div>
 

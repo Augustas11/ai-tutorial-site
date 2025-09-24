@@ -91,7 +91,8 @@ const translations = {
     // Common
     'common.minRead': 'min read',
     'common.author': 'AI Expert',
-    'common.devTeam': 'Dev Team'
+    'common.devTeam': 'Dev Team',
+    'common.brandName': 'AI Creator School'
   },
   vi: {
     // Navigation
@@ -170,17 +171,24 @@ const translations = {
     // Common
     'common.minRead': 'phút đọc',
     'common.author': 'Chuyên gia AI',
-    'common.devTeam': 'Đội phát triển'
+    'common.devTeam': 'Đội phát triển',
+    'common.brandName': 'Trường Sáng Tạo AI'
   }
 }
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>('en')
+export function LanguageProvider({ 
+  children, 
+  initialLanguage = 'en' 
+}: { 
+  children: ReactNode
+  initialLanguage?: Language 
+}) {
+  const [language, setLanguage] = useState<Language>(initialLanguage)
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
-    // Load language from localStorage after mounting
+    // Load language from localStorage after mounting, but only if not set via URL
     const savedLanguage = localStorage.getItem('language') as Language
     if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'vi')) {
       setLanguage(savedLanguage)

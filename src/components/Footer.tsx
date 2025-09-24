@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Zap, Mail, Twitter, Github, Linkedin } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 const footerLinks = {
   learn: [
@@ -21,6 +22,8 @@ const socialLinks = [
 ]
 
 export default function Footer() {
+  const { t } = useLanguage()
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -29,7 +32,7 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center space-x-2 mb-4">
               <Zap className="h-8 w-8 text-primary-400" />
-              <span className="text-xl font-bold">AI Creator School</span>
+              <span className="text-xl font-bold">{t('common.brandName')}</span>
             </Link>
             <p className="text-gray-400 mb-6 max-w-md">
               Master artificial intelligence through practical tutorials, powerful tools, 
