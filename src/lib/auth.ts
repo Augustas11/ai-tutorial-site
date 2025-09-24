@@ -139,7 +139,7 @@ export class UserStorage {
   }
 
   getUserByEmail(email: string): User | null {
-    for (const user of this.users.values()) {
+    for (const [userId, user] of this.users.entries()) {
       if (user.email === email) {
         return user
       }
