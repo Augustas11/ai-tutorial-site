@@ -175,10 +175,15 @@ export default function FooterStatic({ lang }: FooterStaticProps) {
             <p className="text-gray-400 text-sm">
               {copyrightText}
             </p>
-            <div className="flex items-center space-x-1 text-gray-400 text-sm mt-4 md:mt-0">
-              <Mail className="h-4 w-4" />
-              <span>hello@aitutorialhub.com</span>
-            </div>
+                <div className="flex items-center space-x-1 text-gray-400 text-sm mt-4 md:mt-0">
+                  <Mail className="h-4 w-4" />
+                  <a 
+                    href="mailto:hello@ai-creator-school.com"
+                    className="hover:text-white transition-colors"
+                  >
+                    hello@ai-creator-school.com
+                  </a>
+                </div>
           </div>
         </div>
       </div>
