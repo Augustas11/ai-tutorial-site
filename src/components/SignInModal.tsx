@@ -302,6 +302,7 @@ export default function SignInModal({
               <button
                 onClick={() => {
                   console.log('SignInModal: Button clicked!', { isSubmitting, email, name })
+                  alert('Button clicked!')
                   handleSubmit()
                 }}
                 disabled={isSubmitting}
@@ -329,7 +330,11 @@ export default function SignInModal({
 
             <div className="mt-6 pt-4 border-t border-gray-200">
               <button
-                onClick={handleGuestLogin}
+                onClick={() => {
+                  console.log('Guest button clicked!')
+                  alert('Guest button clicked!')
+                  handleGuestLogin()
+                }}
                 className="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center space-x-2"
               >
                 <User className="h-4 w-4" />
