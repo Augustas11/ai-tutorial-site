@@ -102,6 +102,9 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
     )
   }
 
+  // Debug logging
+  console.log('StreakHeader render:', { user, isGuest: user?.isGuest, loading, streakData })
+
   if (!streakData || streakData.currentStreak === 0) {
     return (
       <div className={`flex items-center space-x-2 ${className}`}>
