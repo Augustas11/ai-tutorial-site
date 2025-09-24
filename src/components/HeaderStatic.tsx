@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { Zap, BookOpen, Wrench, Users, Globe, Menu, X } from 'lucide-react'
+import StreakHeader from './StreakHeader'
 
 interface HeaderStaticProps {
   lang: string
@@ -95,6 +96,9 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center space-x-4">
+            {/* Streak Display */}
+            <StreakHeader userId="default-user" />
+            
             <div className="relative group">
               <button className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors">
                 <Globe className="h-4 w-4" />
