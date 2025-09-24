@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { Zap, BookOpen, Wrench, Users, Globe, Menu, X, BarChart3, User } from 'lucide-react'
 import StreakHeader from './StreakHeader'
 import UserLoginModal from './UserLoginModal'
+import SignInModal from './SignInModal'
 import { useAuth } from '@/contexts/AuthContext'
 
 interface HeaderStaticProps {
@@ -15,6 +16,7 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [refreshTrigger, setRefreshTrigger] = useState(0)
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
+  const [showSignInModal, setShowSignInModal] = useState(false)
   const { user } = useAuth()
   const isVietnamese = lang === 'vn'
   
@@ -32,7 +34,8 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
     { 
       name: isVietnamese ? 'Hệ thống Streak' : 'My Streaks', 
       href: `/dashboard/${lang}`, 
-      icon: BarChart3 
+      icon: BarChart3,
+      requiresAuth: true
     },
     { 
       name: isVietnamese ? 'Cộng đồng' : 'Community', 
@@ -97,6 +100,20 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
                     <Icon className="h-4 w-4" />
                     <span>{item.name}</span>
                   </a>
+                )
+              }
+              
+              // Handle auth-required links
+              if (item.requiresAuth && (!user || user.isGuest)) {
+                return (
+                  <button
+                    key={item.name}
+                    onClick={() => setShowSignInModal(true)}
+                    className="text-gray-700 hover:text-primary-600 transition-colors flex items-center space-x-1"
+                  >
+                    <Icon className="h-4 w-4" />
+                    <span>{item.name}</span>
+                  </button>
                 )
               }
               
@@ -227,6 +244,23 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
                   )
                 }
                 
+                // Handle auth-required links for mobile
+                if (item.requiresAuth && (!user || user.isGuest)) {
+                  return (
+                    <button
+                      key={item.name}
+                      onClick={() => {
+                        setShowSignInModal(true)
+                        setIsMenuOpen(false)
+                      }}
+                      className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 flex items-center space-x-2"
+                    >
+                      <Icon className="h-4 w-4" />
+                      <span>{item.name}</span>
+                    </button>
+                  )
+                }
+                
                 return (
                   <Link
                     key={item.name}
@@ -268,6 +302,15 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
         isOpen={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}
         lang={lang}
+      />
+      
+      {/* Sign In Modal for Dashboard Access */}
+      <SignInModal
+        isOpen={showSignInModal}
+        onClose={() => setShowSignInModal(false)}
+        lang={lang}
+        title={isVietnamese ? 'Đăng nhập để xem chuỗi của bạn' : 'Sign in to view your streaks'}
+        subtitle={isVietnamese ? 'Tạo tài khoản để theo dõi chuỗi học tập và thành tích của bạn!' : 'Create an account to track your learning streaks and achievements!'}
       />
     </header>
   )

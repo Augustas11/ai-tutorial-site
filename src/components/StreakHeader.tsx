@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Flame, Trophy, Star, Zap } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
+import SignInModal from './SignInModal'
 
 interface StreakData {
   currentStreak: number
@@ -22,6 +23,7 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
   const { user, session } = useAuth()
   const [streakData, setStreakData] = useState<StreakData | null>(null)
   const [loading, setLoading] = useState(true)
+  const [showSignInModal, setShowSignInModal] = useState(false)
   const isVietnamese = lang === 'vn'
   
   // Use authenticated user ID or fallback to provided userId
@@ -33,14 +35,18 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
       streak: 'Streak',
       day: 'Day',
       days: 'Days',
-      best: 'Best'
+      best: 'Best',
+      signInRequired: 'Sign in to track streaks',
+      signInRequiredSubtitle: 'Create an account to start tracking your learning streaks and earn points!'
     },
     vn: {
       startStreak: 'Bắt đầu',
       streak: 'Chuỗi',
       day: 'Ngày',
       days: 'Ngày',
-      best: 'Tốt nhất'
+      best: 'Tốt nhất',
+      signInRequired: 'Đăng nhập để theo dõi chuỗi',
+      signInRequiredSubtitle: 'Tạo tài khoản để bắt đầu theo dõi chuỗi học tập và kiếm điểm!'
     }
   }
 
@@ -99,8 +105,14 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
   if (!streakData || streakData.currentStreak === 0) {
     return (
       <div className={`flex items-center space-x-2 ${className}`}>
-        <a 
-          href={`/dashboard/${user?.language || lang}`} 
+        <button 
+          onClick={() => {
+            if (!user || user.isGuest) {
+              setShowSignInModal(true)
+            } else {
+              window.location.href = `/dashboard/${user?.language || lang}`
+            }
+          }}
           className="flex items-center space-x-2 bg-gray-100 px-4 py-2 rounded-full border border-gray-200 hover:bg-gray-200 transition-colors cursor-pointer"
         >
           <Zap className="h-4 w-4 text-gray-600" />
@@ -108,7 +120,15 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
             <span className="text-sm font-medium text-gray-700 leading-none">{t.startStreak}</span>
             <span className="text-xs text-gray-500 leading-none">{t.streak}</span>
           </div>
-        </a>
+        </button>
+        
+        <SignInModal
+          isOpen={showSignInModal}
+          onClose={() => setShowSignInModal(false)}
+          lang={lang}
+          title={t.signInRequired}
+          subtitle={t.signInRequiredSubtitle}
+        />
       </div>
     )
   }
@@ -116,8 +136,14 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
   return (
     <div className={`flex items-center space-x-2 ${className}`}>
       {/* Streak Display */}
-      <a 
-        href={`/dashboard/${user?.language || lang}`} 
+      <button 
+        onClick={() => {
+          if (!user || user.isGuest) {
+            setShowSignInModal(true)
+          } else {
+            window.location.href = `/dashboard/${user?.language || lang}`
+          }
+        }}
         className={`flex items-center space-x-2 bg-gradient-to-r ${getStreakColor(streakData.currentStreak)} px-4 py-2 rounded-full text-white shadow-sm hover:shadow-md transition-all cursor-pointer`}
       >
         {getStreakIcon(streakData.currentStreak)}
@@ -129,7 +155,7 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
             {t.streak}
           </span>
         </div>
-      </a>
+      </button>
 
       {/* Streak Bonus Indicator */}
       {streakData.streakBonus > 0 && (
@@ -150,6 +176,14 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
           {isVietnamese ? 'Chuỗi dài nhất' : 'Longest streak'}: {streakData.longestStreak} {streakData.longestStreak === 1 ? t.day : t.days}
         </div>
       </div>
+      
+      <SignInModal
+        isOpen={showSignInModal}
+        onClose={() => setShowSignInModal(false)}
+        lang={lang}
+        title={t.signInRequired}
+        subtitle={t.signInRequiredSubtitle}
+      />
     </div>
   )
 }

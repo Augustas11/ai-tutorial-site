@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react'
 import { Flame, Trophy, Star, Target, Zap } from 'lucide-react'
 import { useStreakNotifications } from './StreakNotification'
+import { useAuth } from '@/contexts/AuthContext'
+import SignInModal from './SignInModal'
 
 interface StreakData {
   currentStreak: number
@@ -28,27 +30,49 @@ interface StreakWidgetProps {
   streakType?: 'learning' | 'chat' | 'overall'
   showMilestones?: boolean
   compact?: boolean
+  lang?: string
 }
 
 export default function StreakWidget({ 
   userId = 'default-user', 
   streakType = 'overall',
   showMilestones = true,
-  compact = false 
+  compact = false,
+  lang = 'en'
 }: StreakWidgetProps) {
+  const { user, session } = useAuth()
   const [streakData, setStreakData] = useState<StreakData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [showSignInModal, setShowSignInModal] = useState(false)
   const { addNotification } = useStreakNotifications()
+  const isVietnamese = lang === 'vn'
+
+  // Use authenticated user ID or fallback to provided userId
+  const currentUserId = user?.id || userId
 
   useEffect(() => {
     fetchStreakData()
-  }, [userId, streakType])
+  }, [currentUserId, streakType, user?.id])
 
   const fetchStreakData = async () => {
+    if (!currentUserId) {
+      setLoading(false)
+      return
+    }
+    
     try {
       setLoading(true)
-      const response = await fetch(`/api/streak?userId=${userId}&type=${streakType}`)
+      const params = new URLSearchParams({
+        userId: currentUserId,
+        type: streakType
+      })
+      
+      if (session?.sessionId) {
+        params.append('sessionId', session.sessionId)
+      }
+      
+      const response = await fetch(`/api/streak?${params}`)
       const result = await response.json()
       
       if (result.success) {
@@ -64,6 +88,11 @@ export default function StreakWidget({
   }
 
   const recordActivity = async (activityType: string, pointsEarned: number = 0) => {
+    if (!currentUserId) {
+      setShowSignInModal(true)
+      return
+    }
+    
     try {
       const response = await fetch('/api/streak', {
         method: 'POST',
@@ -71,9 +100,10 @@ export default function StreakWidget({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId,
+          userId: currentUserId,
           activityType,
-          pointsEarned
+          pointsEarned,
+          sessionId: session?.sessionId
         }),
       })
       
@@ -116,7 +146,56 @@ export default function StreakWidget({
     )
   }
 
-  if (!streakData) return null
+  if (!streakData) {
+    // Show sign-in prompt for non-logged users
+    if (!user || user.isGuest) {
+      const content = {
+        en: {
+          title: 'Sign in to track streaks',
+          subtitle: 'Create an account to start tracking your learning streaks and earn points!',
+          signIn: 'Sign In',
+          guest: 'Continue as Guest'
+        },
+        vn: {
+          title: 'Đăng nhập để theo dõi chuỗi',
+          subtitle: 'Tạo tài khoản để bắt đầu theo dõi chuỗi học tập và kiếm điểm!',
+          signIn: 'Đăng nhập',
+          guest: 'Tiếp tục với tài khách'
+        }
+      }
+      
+      const t = content[isVietnamese ? 'vn' : 'en']
+      
+      return (
+        <div className="bg-white rounded-lg shadow-md p-6 text-center">
+          <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Flame className="h-8 w-8 text-primary-600" />
+          </div>
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">{t.title}</h3>
+          <p className="text-gray-600 text-sm mb-6">{t.subtitle}</p>
+          
+          <div className="space-y-3">
+            <button
+              onClick={() => setShowSignInModal(true)}
+              className="w-full bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors"
+            >
+              {t.signIn}
+            </button>
+          </div>
+          
+          <SignInModal
+            isOpen={showSignInModal}
+            onClose={() => setShowSignInModal(false)}
+            lang={lang}
+            title={t.title}
+            subtitle={t.subtitle}
+          />
+        </div>
+      )
+    }
+    
+    return null
+  }
 
   const getStreakIcon = (streak: number) => {
     if (streak >= 100) return <Trophy className="h-6 w-6 text-yellow-500" />
@@ -255,6 +334,14 @@ export default function StreakWidget({
           Complete Tutorial (+10 pts)
         </button>
       </div>
+      
+      <SignInModal
+        isOpen={showSignInModal}
+        onClose={() => setShowSignInModal(false)}
+        lang={lang}
+        title={isVietnamese ? 'Đăng nhập để theo dõi chuỗi' : 'Sign in to track streaks'}
+        subtitle={isVietnamese ? 'Tạo tài khoản để bắt đầu theo dõi chuỗi học tập và kiếm điểm!' : 'Create an account to start tracking your learning streaks and earn points!'}
+      />
     </div>
   )
 }
