@@ -163,6 +163,10 @@ export class UserStorage {
     return this.users.delete(userId)
   }
 
+  getAllUsers(): User[] {
+    return Array.from(this.users.values())
+  }
+
   // Activity tracking methods
   recordActivity(userId: string, activityType: string, pointsEarned: number = 0): void {
     const user = this.users.get(userId)
