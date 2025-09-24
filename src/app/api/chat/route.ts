@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     }
 
     // DeepSeek API configuration
-    const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY
+    const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY || 'sk-b365cf03499a4b0285d71fece85e8199'
     console.log('Environment check:', {
       hasApiKey: !!DEEPSEEK_API_KEY,
       keyLength: DEEPSEEK_API_KEY?.length,
