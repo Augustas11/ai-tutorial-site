@@ -224,14 +224,19 @@ export default function SignInModal({
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl shadow-lg p-6 max-w-md mx-4 relative">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style={{ zIndex: 9999 }}>
+      <div className="bg-white rounded-xl shadow-lg p-6 max-w-md mx-4 relative" style={{ zIndex: 10000 }}>
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
         >
           <X className="h-5 w-5" />
         </button>
+        
+        {/* Debug indicator */}
+        <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
+          MODAL OPEN
+        </div>
         
         <div className="text-center mb-6">
           <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
