@@ -176,7 +176,7 @@ export default function SignInModal({
     )
   }
 
-  if (user && user.isGuest && !isLoginMode) {
+  if (user if (user && user.isGuest && !isLoginMode) {if (user && user.isGuest && !isLoginMode) { user.isGuest && !isLoginMode) {
     console.log('SignInModal: Showing guest user modal')
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -208,7 +208,14 @@ export default function SignInModal({
               onClick={() => {
                 console.log('Guest login button clicked!')
                 alert('Guest login button clicked!')
-                setIsLoginMode(true)
+                // Instead of just setting login mode, show the actual sign-in form
+                // We'll do this by closing this modal and opening the main one
+                onClose()
+                // Trigger the main sign-in modal by setting a flag or calling a callback
+                setTimeout(() => {
+                  // This will be handled by the parent component
+                  window.location.reload()
+                }, 100)
               }}
               className="w-full bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors flex items-center justify-center space-x-2"
             >

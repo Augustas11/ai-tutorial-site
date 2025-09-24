@@ -40,19 +40,47 @@ export default function UserDashboard({ lang, userId = 'default-user' }: UserDas
   const fetchUserStats = async () => {
     try {
       setLoading(true)
-      // In production, this would fetch from your database
-      // For now, we'll simulate some data
-      const mockStats: ActivityStats = {
-        totalTutorials: 12,
-        totalChatMessages: 45,
-        totalSubscriptions: 1,
-        currentStreak: 7,
-        longestStreak: 14,
-        totalPoints: 285
+      console.log('UserDashboard: Fetching real user stats for:', userId)
+      
+      // Fetch real streak data from API
+      const streakResponse = await fetch(`/api/streak?userId=${userId}&type=overall`)
+      const streakResult = await streakResponse.json()
+      
+      console.log('UserDashboard: Streak API response:', streakResult)
+      
+      if (streakResult.success) {
+        const streakData = streakResult.data
+        setStats({
+          totalTutorials: 0, // TODO: Implement tutorial tracking
+          totalChatMessages: 0, // TODO: Implement chat message tracking
+          totalSubscriptions: 0, // TODO: Implement subscription tracking
+          currentStreak: streakData.currentStreak || 0,
+          longestStreak: streakData.longestStreak || 0,
+          totalPoints: streakData.streakBonus || 0
+        })
+      } else {
+        console.error('Failed to fetch streak data:', streakResult.error)
+        // Fallback to empty stats
+        setStats({
+          totalTutorials: 0,
+          totalChatMessages: 0,
+          totalSubscriptions: 0,
+          currentStreak: 0,
+          longestStreak: 0,
+          totalPoints: 0
+        })
       }
-      setStats(mockStats)
     } catch (err) {
       console.error('Failed to fetch user stats:', err)
+      // Fallback to empty stats
+      setStats({
+        totalTutorials: 0,
+        totalChatMessages: 0,
+        totalSubscriptions: 0,
+        currentStreak: 0,
+        longestStreak: 0,
+        totalPoints: 0
+      })
     } finally {
       setLoading(false)
     }
