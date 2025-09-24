@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Flame, Trophy, Star, Zap } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
-import SimpleSignInModal from './SimpleSignInModal'
+import SignInModal from './SignInModal'
 
 interface StreakData {
   currentStreak: number
@@ -123,10 +123,12 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
           </div>
         </button>
         
-        <SimpleSignInModal
+        <SignInModal
           isOpen={showSignInModal}
           onClose={() => setShowSignInModal(false)}
           lang={lang}
+          title={t.signInRequired}
+          subtitle={t.signInRequiredSubtitle}
         />
       </div>
     )
@@ -176,10 +178,12 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
         </div>
       </div>
       
-      <SimpleSignInModal
+      <SignInModal
         isOpen={showSignInModal}
         onClose={() => setShowSignInModal(false)}
         lang={lang}
+        title={t.signInRequired}
+        subtitle={t.signInRequiredSubtitle}
       />
     </div>
   )

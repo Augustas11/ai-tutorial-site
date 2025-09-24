@@ -69,11 +69,10 @@ export default function SignInModal({
 
   const t = content[isVietnamese ? 'vn' : 'en']
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log('SignInModal: Form submitted', { email, name, isSubmitting })
-    setError('')
-    setIsSubmitting(true)
+      const handleSubmit = async () => {
+        console.log('SignInModal: Form submitted', { email, name, isSubmitting })
+        setError('')
+        setIsSubmitting(true)
 
     try {
       if (!email.trim()) {
@@ -260,66 +259,64 @@ export default function SignInModal({
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              {t.email}
-            </label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 placeholder-gray-500"
-                placeholder={isVietnamese ? 'your@email.com' : 'your@email.com'}
-                required
-              />
-            </div>
-          </div>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  {t.email}
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 placeholder-gray-500"
+                    placeholder={isVietnamese ? 'your@email.com' : 'your@email.com'}
+                    required
+                  />
+                </div>
+              </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              {t.name}
-            </label>
-            <div className="relative">
-              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 placeholder-gray-500"
-                placeholder={isVietnamese ? 'Tên của bạn' : 'Your name'}
-              />
-            </div>
-          </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  {t.name}
+                </label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 placeholder-gray-500"
+                    placeholder={isVietnamese ? 'Tên của bạn' : 'Your name'}
+                  />
+                </div>
+              </div>
 
-          {error && (
-            <div className="text-red-600 text-sm text-center">
-              {error}
-            </div>
-          )}
+              {error && (
+                <div className="text-red-600 text-sm text-center">
+                  {error}
+                </div>
+              )}
 
-          <button
-            type="button"
-            onClick={(e) => {
-              console.log('SignInModal: Button clicked!', { isSubmitting, email, name })
-              alert('Button clicked!')
-              e.preventDefault()
-              handleSubmit(e as any)
-            }}
-            className="w-full bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors flex items-center justify-center space-x-2"
-          >
-            {isSubmitting ? (
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-            ) : (
-              <>
-                {isLoginMode ? <LogIn className="h-4 w-4" /> : <UserPlus className="h-4 w-4" />}
-                <span>{isLoginMode ? t.login : t.register}</span>
-              </>
-            )}
-          </button>
-        </form>
+              <button
+                onClick={() => {
+                  console.log('SignInModal: Button clicked!', { isSubmitting, email, name })
+                  handleSubmit()
+                }}
+                disabled={isSubmitting}
+                className="w-full bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors flex items-center justify-center space-x-2 disabled:opacity-50"
+              >
+                {isSubmitting ? (
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                ) : (
+                  <>
+                    {isLoginMode ? <LogIn className="h-4 w-4" /> : <UserPlus className="h-4 w-4" />}
+                    <span>{isLoginMode ? t.login : t.register}</span>
+                  </>
+                )}
+              </button>
+            </div>
 
         <div className="mt-4 text-center">
           <button
@@ -330,24 +327,15 @@ export default function SignInModal({
           </button>
         </div>
 
-        <div className="mt-6 pt-4 border-t border-gray-200">
-          <button
-            onClick={() => {
-              console.log('Test button clicked!')
-              alert('Test button works!')
-            }}
-            className="w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors mb-2"
-          >
-            TEST BUTTON
-          </button>
-          <button
-            onClick={handleGuestLogin}
-            className="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center space-x-2"
-          >
-            <User className="h-4 w-4" />
-            <span>{t.guest}</span>
-          </button>
-        </div>
+            <div className="mt-6 pt-4 border-t border-gray-200">
+              <button
+                onClick={handleGuestLogin}
+                className="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center space-x-2"
+              >
+                <User className="h-4 w-4" />
+                <span>{t.guest}</span>
+              </button>
+            </div>
       </div>
     </div>
   )
