@@ -1,10 +1,14 @@
+'use client'
+
 import { Star } from 'lucide-react'
+import { useState } from 'react'
 
 interface HeroStaticProps {
   lang: string
 }
 
 export default function HeroStatic({ lang }: HeroStaticProps) {
+  const [inputValue, setInputValue] = useState('')
   const isVietnamese = lang === 'vn'
   
   const content = {
@@ -13,7 +17,7 @@ export default function HeroStatic({ lang }: HeroStaticProps) {
       title: 'Master AI with',
       titleHighlight: 'Practical Examples',
       description: 'Learn artificial intelligence through hands-on tutorials, ready-to-use prompts, and powerful automation tools. From beginner to expert, we\'ve got you covered.',
-      chatTitle: 'Master AI with - Practical Examples',
+      chatTitle: 'What\'s on your mind today?',
       chatPlaceholder: 'Ask anything',
       tutorials: 'Tutorials',
       tools: 'AI Tools',
@@ -24,7 +28,7 @@ export default function HeroStatic({ lang }: HeroStaticProps) {
       title: 'Thành thạo AI với',
       titleHighlight: 'Ví dụ thực tế',
       description: 'Học trí tuệ nhân tạo thông qua các hướng dẫn thực hành, gợi ý sẵn sàng sử dụng và các công cụ tự động hóa mạnh mẽ. Từ người mới bắt đầu đến chuyên gia, chúng tôi có đầy đủ.',
-      chatTitle: 'Thành thạo AI với - Ví dụ thực tế',
+      chatTitle: 'Hôm nay bạn nghĩ gì?',
       chatPlaceholder: 'Hỏi bất cứ điều gì',
       tutorials: 'Hướng dẫn',
       tools: 'Công cụ AI',
@@ -33,6 +37,23 @@ export default function HeroStatic({ lang }: HeroStaticProps) {
   }
 
   const t = content[isVietnamese ? 'vn' : 'en']
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (inputValue.trim()) {
+      console.log('User asked:', inputValue)
+      // Here you can add your AI response logic
+      // For now, we'll just log the input
+      setInputValue('') // Clear the input after submission
+    }
+  }
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      handleSubmit(e)
+    }
+  }
 
   return (
     <section id="hero" className="bg-gradient-to-br from-primary-50 to-blue-50 py-20">
@@ -59,7 +80,7 @@ export default function HeroStatic({ lang }: HeroStaticProps) {
             <h2 className="text-2xl font-semibold text-gray-800 mb-6">
               {t.chatTitle}
             </h2>
-            <div className="max-w-2xl mx-auto bg-gray-800 rounded-xl shadow-lg p-4">
+            <form onSubmit={handleSubmit} className="max-w-2xl mx-auto bg-gray-800 rounded-xl shadow-lg p-4">
               <div className="flex items-center space-x-3">
                 <button
                   type="button"
@@ -70,9 +91,11 @@ export default function HeroStatic({ lang }: HeroStaticProps) {
                 <div className="flex-1 relative">
                   <input
                     type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyPress={handleKeyPress}
                     placeholder={t.chatPlaceholder}
                     className="w-full bg-gray-700 text-white placeholder-gray-400 rounded-full py-2 pl-4 pr-16 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                    disabled
                   />
                   <div className="absolute inset-y-0 right-0 flex items-center pr-2">
                     <button
@@ -84,8 +107,9 @@ export default function HeroStatic({ lang }: HeroStaticProps) {
                       </svg>
                     </button>
                     <button
-                      type="button"
-                      className="p-2 rounded-full bg-primary-600 text-white hover:bg-primary-700 transition-colors"
+                      type="submit"
+                      disabled={!inputValue.trim()}
+                      className="p-2 rounded-full bg-primary-600 text-white hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
@@ -94,7 +118,7 @@ export default function HeroStatic({ lang }: HeroStaticProps) {
                   </div>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
           
           <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
