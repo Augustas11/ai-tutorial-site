@@ -12,12 +12,12 @@ export async function generateMetadata({ params }: { params: { lang: string } })
   
   const titles = {
     en: 'AI Creator School - Learn AI with Practical Examples',
-    vi: 'Trường Sáng Tạo AI - Học AI với Ví dụ Thực tế'
+    vn: 'Trường Sáng Tạo AI - Học AI với Ví dụ Thực tế'
   }
   
   const descriptions = {
     en: 'Master AI with tutorials, prompts, and automation tools. Learn practical AI applications step by step.',
-    vi: 'Thành thạo AI với các hướng dẫn, gợi ý và công cụ tự động hóa. Học các ứng dụng AI thực tế từng bước.'
+    vn: 'Thành thạo AI với các hướng dẫn, gợi ý và công cụ tự động hóa. Học các ứng dụng AI thực tế từng bước.'
   }
 
   return {
@@ -39,7 +39,7 @@ export default function LanguageLayout({
   return (
     <html lang={lang}>
       <body className={inter.className}>
-        <LanguageProvider initialLanguage={lang as 'en' | 'vi'}>
+        <LanguageProvider initialLanguage={lang as 'en' | 'vn'}>
           <div className="min-h-screen flex flex-col">
             <Header />
             <main className="flex-grow">

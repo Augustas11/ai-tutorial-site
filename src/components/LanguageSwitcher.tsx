@@ -11,7 +11,7 @@ export default function LanguageSwitcher() {
 
   const languages = [
     { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' }
+    { code: 'vn', name: 'Tiếng Việt', flag: '🇻🇳' }
   ] as const
 
   const handleLanguageChange = (newLang: string) => {

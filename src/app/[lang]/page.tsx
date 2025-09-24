@@ -6,7 +6,7 @@ import NewsletterSignup from '@/components/NewsletterSignup'
 import StatsSection from '@/components/StatsSection'
 import { LanguageProvider } from '@/contexts/LanguageContext'
 
-const supportedLanguages = ['en', 'vi']
+const supportedLanguages = ['en', 'vn']
 
 export default function LanguagePage({ params }: { params: { lang: string } }) {
   const { lang } = params
@@ -16,7 +16,7 @@ export default function LanguagePage({ params }: { params: { lang: string } }) {
   }
 
   return (
-    <LanguageProvider initialLanguage={lang as 'en' | 'vi'}>
+    <LanguageProvider initialLanguage={lang as 'en' | 'vn'}>
       <div className="min-h-screen">
         <Hero />
         <StatsSection />

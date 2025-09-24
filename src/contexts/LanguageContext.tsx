@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react'
 
-export type Language = 'en' | 'vi'
+export type Language = 'en' | 'vn'
 
 interface LanguageContextType {
   language: Language
@@ -94,7 +94,7 @@ const translations = {
     'common.devTeam': 'Dev Team',
     'common.brandName': 'AI Creator School'
   },
-  vi: {
+  vn: {
     // Navigation
     'nav.tutorials': 'Hướng dẫn',
     'nav.tools': 'Công cụ',
@@ -190,7 +190,7 @@ export function LanguageProvider({
     setMounted(true)
     // Load language from localStorage after mounting, but only if not set via URL
     const savedLanguage = localStorage.getItem('language') as Language
-    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'vi')) {
+    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'vn')) {
       setLanguage(savedLanguage)
     }
   }, [])
