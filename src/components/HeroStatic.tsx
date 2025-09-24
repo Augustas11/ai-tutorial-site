@@ -22,10 +22,7 @@ export default function HeroStatic({ lang }: HeroStaticProps) {
       titleHighlight: 'Practical Examples',
       description: 'Learn artificial intelligence through hands-on tutorials, ready-to-use prompts, and powerful automation tools. From beginner to expert, we\'ve got you covered.',
       chatTitle: 'What\'s on your mind today?',
-      chatPlaceholder: 'Ask anything',
-      tutorials: 'Tutorials',
-      tools: 'AI Tools',
-      students: 'Students'
+      chatPlaceholder: 'Ask anything'
     },
     vn: {
       badge: 'Tham gia 100+ người học AI',
@@ -33,10 +30,7 @@ export default function HeroStatic({ lang }: HeroStaticProps) {
       titleHighlight: 'Ví dụ thực tế',
       description: 'Học trí tuệ nhân tạo thông qua các hướng dẫn thực hành, gợi ý sẵn sàng sử dụng và các công cụ tự động hóa mạnh mẽ. Từ người mới bắt đầu đến chuyên gia, chúng tôi có đầy đủ.',
       chatTitle: 'Hôm nay bạn nghĩ gì?',
-      chatPlaceholder: 'Hỏi bất cứ điều gì',
-      tutorials: 'Hướng dẫn',
-      tools: 'Công cụ AI',
-      students: 'Học viên'
+      chatPlaceholder: 'Hỏi bất cứ điều gì'
     }
   }
 
@@ -73,21 +67,6 @@ export default function HeroStatic({ lang }: HeroStaticProps) {
               userId={userId}
               onStreakUpdate={setStreakData}
             />
-          </div>
-          
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary-600 mb-2">100+</div>
-              <div className="text-gray-600">{t.tutorials}</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary-600 mb-2">50+</div>
-              <div className="text-gray-600">{t.tools}</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary-600 mb-2">100+</div>
-              <div className="text-gray-600">{t.students}</div>
-            </div>
           </div>
         </div>
       </div>
