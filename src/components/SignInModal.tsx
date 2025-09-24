@@ -223,8 +223,24 @@ export default function SignInModal({
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style={{ zIndex: 9999 }}>
-      <div className="bg-white rounded-xl shadow-lg p-6 max-w-md mx-4 relative" style={{ zIndex: 10000 }}>
+    <div 
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" 
+      style={{ zIndex: 9999 }}
+      onClick={(e) => {
+        console.log('Modal backdrop clicked', e.target === e.currentTarget)
+        if (e.target === e.currentTarget) {
+          onClose()
+        }
+      }}
+    >
+      <div 
+        className="bg-white rounded-xl shadow-lg p-6 max-w-md mx-4 relative" 
+        style={{ zIndex: 10000 }}
+        onClick={(e) => {
+          console.log('Modal content clicked')
+          e.stopPropagation()
+        }}
+      >
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
@@ -285,17 +301,14 @@ export default function SignInModal({
           )}
 
           <button
-            type="submit"
-            disabled={isSubmitting}
+            type="button"
             onClick={(e) => {
-              console.log('SignInModal: Button clicked', { isSubmitting, email, name, disabled: isSubmitting })
-              alert('Button clicked!') // Simple test
-              if (isSubmitting) {
-                e.preventDefault()
-                return
-              }
+              console.log('SignInModal: Button clicked!', { isSubmitting, email, name })
+              alert('Button clicked!')
+              e.preventDefault()
+              handleSubmit(e as any)
             }}
-            className="w-full bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+            className="w-full bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors flex items-center justify-center space-x-2"
           >
             {isSubmitting ? (
               <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
@@ -318,6 +331,15 @@ export default function SignInModal({
         </div>
 
         <div className="mt-6 pt-4 border-t border-gray-200">
+          <button
+            onClick={() => {
+              console.log('Test button clicked!')
+              alert('Test button works!')
+            }}
+            className="w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors mb-2"
+          >
+            TEST BUTTON
+          </button>
           <button
             onClick={handleGuestLogin}
             className="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center space-x-2"
