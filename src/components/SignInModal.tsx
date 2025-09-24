@@ -290,7 +290,10 @@ export default function SignInModal({
                   <input
                     type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      console.log('Email input changed:', e.target.value)
+                      setEmail(e.target.value)
+                    }}
                     className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                     placeholder={isVietnamese ? 'your@email.com' : 'your@email.com'}
                     required
@@ -307,7 +310,10 @@ export default function SignInModal({
                   <input
                     type="text"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => {
+                      console.log('Name input changed:', e.target.value)
+                      setName(e.target.value)
+                    }}
                     className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                     placeholder={isVietnamese ? 'Tên của bạn' : 'Your name'}
                   />
@@ -322,8 +328,16 @@ export default function SignInModal({
 
               <button
                 onClick={() => {
-                  console.log('SignInModal: Button clicked!', { isSubmitting, email, name })
-                  alert('Button clicked!')
+                  console.log('SignInModal: Button clicked!', { 
+                    isSubmitting, 
+                    email, 
+                    name, 
+                    emailLength: email.length,
+                    nameLength: name.length,
+                    emailTrimmed: email.trim(),
+                    nameTrimmed: name.trim()
+                  })
+                  alert(`Button clicked! Email: "${email}", Name: "${name}"`)
                   handleSubmit()
                 }}
                 disabled={isSubmitting}
