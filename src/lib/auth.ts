@@ -139,7 +139,9 @@ export class UserStorage {
   }
 
   getUserByEmail(email: string): User | null {
-    for (const [userId, user] of this.users.entries()) {
+    const usersArray = Array.from(this.users.values())
+    for (let i = 0; i < usersArray.length; i++) {
+      const user = usersArray[i]
       if (user.email === email) {
         return user
       }
