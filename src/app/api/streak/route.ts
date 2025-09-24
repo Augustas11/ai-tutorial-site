@@ -1,17 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { calculateStreak, getStreakBonusPoints, getUnlockedMilestones, STREAK_MILESTONES } from '@/lib/streak'
+import { SessionManager, UserStorage } from '@/lib/auth'
 
-// Mock user data - in production, this would come from your database
-const mockUserActivities = new Map<string, Date[]>()
+// In-memory storage for development (replace with database in production)
+const userActivities = new Map<string, Date[]>()
+const sessionManager = SessionManager.getInstance()
+const userStorage = UserStorage.getInstance()
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     const userId = searchParams.get('userId') || 'default-user'
+    const sessionId = searchParams.get('sessionId')
     const streakType = searchParams.get('type') as 'learning' | 'chat' | 'overall' || 'overall'
 
-    // Get user activities (in production, fetch from database)
-    const activities = mockUserActivities.get(userId) || []
+    // Validate session if provided
+    if (sessionId) {
+      const session = sessionManager.getSession(sessionId)
+      if (!session || session.userId !== userId) {
+        return NextResponse.json(
+          { error: 'Invalid session' },
+          { status: 401 }
+        )
+      }
+    }
+
+    // Get user activities
+    const activities = userActivities.get(userId) || []
     
     // Calculate streak data
     const streakData = calculateStreak(activities, streakType)
@@ -43,7 +58,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const { userId, activityType, pointsEarned = 0 } = await request.json()
+    const { userId, activityType, pointsEarned = 0, sessionId } = await request.json()
     
     if (!userId || !activityType) {
       return NextResponse.json(
@@ -52,9 +67,20 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Validate session if provided
+    if (sessionId) {
+      const session = sessionManager.getSession(sessionId)
+      if (!session || session.userId !== userId) {
+        return NextResponse.json(
+          { error: 'Invalid session' },
+          { status: 401 }
+        )
+      }
+    }
+
     // Record activity
     const today = new Date()
-    const activities = mockUserActivities.get(userId) || []
+    const activities = userActivities.get(userId) || []
     
     // Add today's activity if not already recorded
     const todayStr = today.toDateString()
@@ -62,7 +88,7 @@ export async function POST(request: NextRequest) {
     
     if (!hasTodayActivity) {
       activities.push(today)
-      mockUserActivities.set(userId, activities)
+      userActivities.set(userId, activities)
     }
 
     // Calculate new streak data

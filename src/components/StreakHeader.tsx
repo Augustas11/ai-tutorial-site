@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Flame, Trophy, Star, Zap } from 'lucide-react'
+import { useAuth } from '@/contexts/AuthContext'
 
 interface StreakData {
   currentStreak: number
@@ -17,10 +18,14 @@ interface StreakHeaderProps {
   lang?: string
 }
 
-export default function StreakHeader({ userId = 'default-user', className = '', refreshTrigger, lang = 'en' }: StreakHeaderProps) {
+export default function StreakHeader({ userId, className = '', refreshTrigger, lang = 'en' }: StreakHeaderProps) {
+  const { user, session } = useAuth()
   const [streakData, setStreakData] = useState<StreakData | null>(null)
   const [loading, setLoading] = useState(true)
   const isVietnamese = lang === 'vn'
+  
+  // Use authenticated user ID or fallback to provided userId
+  const currentUserId = user?.id || userId || 'default-user'
 
   const content = {
     en: {
@@ -43,11 +48,20 @@ export default function StreakHeader({ userId = 'default-user', className = '', 
 
   useEffect(() => {
     fetchStreakData()
-  }, [userId, refreshTrigger, lang])
+  }, [currentUserId, refreshTrigger, lang])
 
   const fetchStreakData = async () => {
     try {
-      const response = await fetch(`/api/streak?userId=${userId}&type=overall`)
+      const params = new URLSearchParams({
+        userId: currentUserId,
+        type: 'overall'
+      })
+      
+      if (session?.sessionId) {
+        params.append('sessionId', session.sessionId)
+      }
+      
+      const response = await fetch(`/api/streak?${params}`)
       const result = await response.json()
       
       if (result.success) {
@@ -86,7 +100,7 @@ export default function StreakHeader({ userId = 'default-user', className = '', 
     return (
       <div className={`flex items-center space-x-2 ${className}`}>
         <a 
-          href={`/dashboard/${lang}`} 
+          href={`/dashboard/${user?.language || lang}`} 
           className="flex items-center space-x-2 bg-gray-100 px-4 py-2 rounded-full border border-gray-200 hover:bg-gray-200 transition-colors cursor-pointer"
         >
           <Zap className="h-4 w-4 text-gray-600" />
@@ -103,7 +117,7 @@ export default function StreakHeader({ userId = 'default-user', className = '', 
     <div className={`flex items-center space-x-2 ${className}`}>
       {/* Streak Display */}
       <a 
-        href={`/dashboard/${lang}`} 
+        href={`/dashboard/${user?.language || lang}`} 
         className={`flex items-center space-x-2 bg-gradient-to-r ${getStreakColor(streakData.currentStreak)} px-4 py-2 rounded-full text-white shadow-sm hover:shadow-md transition-all cursor-pointer`}
       >
         {getStreakIcon(streakData.currentStreak)}

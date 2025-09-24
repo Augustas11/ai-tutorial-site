@@ -2,8 +2,10 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { Zap, BookOpen, Wrench, Users, Globe, Menu, X, BarChart3 } from 'lucide-react'
+import { Zap, BookOpen, Wrench, Users, Globe, Menu, X, BarChart3, User } from 'lucide-react'
 import StreakHeader from './StreakHeader'
+import UserLoginModal from './UserLoginModal'
+import { useAuth } from '@/contexts/AuthContext'
 
 interface HeaderStaticProps {
   lang: string
@@ -12,6 +14,8 @@ interface HeaderStaticProps {
 export default function HeaderStatic({ lang }: HeaderStaticProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [refreshTrigger, setRefreshTrigger] = useState(0)
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
+  const { user } = useAuth()
   const isVietnamese = lang === 'vn'
   
   const navigation = [
@@ -112,7 +116,18 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
           {/* CTA Button */}
           <div className="hidden md:flex items-center space-x-4">
             {/* Streak Display */}
-            <StreakHeader userId="default-user" refreshTrigger={refreshTrigger} lang={lang} />
+            <StreakHeader refreshTrigger={refreshTrigger} lang={lang} />
+            
+            {/* User Button */}
+            <button
+              onClick={() => setIsLoginModalOpen(true)}
+              className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors"
+            >
+              <User className="h-4 w-4" />
+              <span className="text-sm">
+                {user ? (user.name || user.email) : (isVietnamese ? 'Đăng nhập' : 'Sign In')}
+              </span>
+            </button>
             
             <div className="relative group">
               <button className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors">
@@ -247,6 +262,13 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
           </div>
         )}
       </div>
+
+      {/* Login Modal */}
+      <UserLoginModal 
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+        lang={lang}
+      />
     </header>
   )
 }
