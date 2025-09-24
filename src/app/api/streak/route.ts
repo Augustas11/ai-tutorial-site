@@ -26,11 +26,9 @@ export async function GET(request: NextRequest) {
 
     // Get user activities
     const activities = userStorage.getUserActivities(userId)
-    console.log('Streak API: User activities', { userId, activities })
     
     // Calculate streak data
     const streakData = calculateStreak(activities, streakType)
-    console.log('Streak API: Calculated streak data', streakData)
     
     // Get unlocked milestones
     const unlockedMilestones = getUnlockedMilestones(streakData.currentStreak)

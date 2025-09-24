@@ -75,8 +75,6 @@ export default function SignInModal({
     setIsSubmitting(true)
 
     try {
-      console.log('SignInModal: Form submitted', { email, name })
-      
       if (!email.trim()) {
         throw new Error(isVietnamese ? 'Vui lòng nhập email' : 'Please enter your email')
       }
@@ -86,9 +84,7 @@ export default function SignInModal({
         throw new Error(isVietnamese ? 'Email không hợp lệ' : 'Please enter a valid email')
       }
 
-      console.log('SignInModal: Calling login function')
-      const userData = await login(email.trim(), name.trim() || undefined)
-      console.log('SignInModal: Login successful', userData)
+      await login(email.trim(), name.trim() || undefined)
       
       // Close modal after successful login
       onClose()
@@ -110,12 +106,7 @@ export default function SignInModal({
     onClose()
   }
 
-  if (!isOpen) {
-    console.log('SignInModal: Not open')
-    return null
-  }
-  
-  console.log('SignInModal: Rendering modal', { user, isGuest: user?.isGuest })
+  if (!isOpen) return null
 
   if (isLoading) {
     return (
@@ -232,11 +223,6 @@ export default function SignInModal({
         >
           <X className="h-5 w-5" />
         </button>
-        
-        {/* Debug indicator */}
-        <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
-          MODAL OPEN
-        </div>
         
         <div className="text-center mb-6">
           <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">

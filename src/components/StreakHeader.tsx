@@ -58,8 +58,6 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
 
   const fetchStreakData = async () => {
     try {
-      console.log('StreakHeader: Fetching streak data', { currentUserId, user: user?.id, session: session?.sessionId })
-      
       const params = new URLSearchParams({
         userId: currentUserId,
         type: 'overall'
@@ -71,8 +69,6 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
       
       const response = await fetch(`/api/streak?${params}`)
       const result = await response.json()
-      
-      console.log('StreakHeader: Streak data response', result)
       
       if (result.success) {
         setStreakData(result.data)
@@ -106,20 +102,15 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
     )
   }
 
-  // Debug logging
-  console.log('StreakHeader render:', { user, isGuest: user?.isGuest, loading, streakData })
 
   if (!streakData || streakData.currentStreak === 0) {
     return (
       <div className={`flex items-center space-x-2 ${className}`}>
         <button 
           onClick={() => {
-            console.log('Start Streak clicked', { user, isGuest: user?.isGuest })
             if (!user || user.isGuest) {
-              console.log('Showing sign-in modal')
               setShowSignInModal(true)
             } else {
-              console.log('Redirecting to dashboard')
               window.location.href = `/dashboard/${user?.language || lang}`
             }
           }}

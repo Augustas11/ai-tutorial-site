@@ -25,19 +25,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const initializeAuth = async () => {
     try {
       setIsLoading(true)
-      console.log('AuthContext: Initializing auth...')
       
       // Check for stored session
       const storedSessionId = localStorage.getItem('sessionId')
       const storedUserId = localStorage.getItem('userId')
       
       if (storedSessionId && storedUserId) {
-        console.log('AuthContext: Found stored session', { storedSessionId, storedUserId })
         const activeSession = sessionManager.getSession(storedSessionId)
         if (activeSession && activeSession.userId === storedUserId) {
           const userData = userStorage.getUser(storedUserId)
           if (userData) {
-            console.log('AuthContext: Restored user session', userData)
             setUser(userData)
             setSession(activeSession)
             sessionManager.updateLastActive(storedSessionId)
@@ -47,12 +44,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
       
       // If no valid session, create guest user
-      console.log('AuthContext: Creating guest user...')
       const guestUser = createGuestUser('en')
       userStorage.saveUser(guestUser)
       const guestSession = sessionManager.createSession(guestUser.id)
       
-      console.log('AuthContext: Guest user created', guestUser)
       setUser(guestUser)
       setSession(guestSession)
       
@@ -70,7 +65,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setUser(guestUser)
       setSession(guestSession)
     } finally {
-      console.log('AuthContext: Auth initialization complete')
       setIsLoading(false)
     }
   }
