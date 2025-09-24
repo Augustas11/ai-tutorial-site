@@ -342,20 +342,7 @@ export default function SignInModal({
 
             <div className="mt-6 pt-4 border-t border-gray-200">
               <button
-                onClick={() => {
-                  console.log('TEST: Current form state:', { email, name })
-                  alert(`TEST: Email="${email}", Name="${name}"`)
-                }}
-                className="w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors mb-2"
-              >
-                TEST FORM STATE
-              </button>
-              <button
-                onClick={() => {
-                  console.log('Guest button clicked!')
-                  alert('Guest button clicked!')
-                  handleGuestLogin()
-                }}
+                onClick={handleGuestLogin}
                 className="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center space-x-2"
               >
                 <User className="h-4 w-4" />

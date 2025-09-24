@@ -146,9 +146,12 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
       {/* Streak Display */}
       <button 
         onClick={() => {
+          console.log('StreakHeader: Button clicked', { user, isGuest: user?.isGuest })
           if (!user || user.isGuest) {
+            console.log('StreakHeader: Opening sign-in modal')
             setShowSignInModal(true)
           } else {
+            console.log('StreakHeader: Redirecting to dashboard')
             window.location.href = `/dashboard/${user?.language || lang}`
           }
         }}
@@ -187,7 +190,10 @@ export default function StreakHeader({ userId, className = '', refreshTrigger, l
       
       <SignInModal
         isOpen={showSignInModal}
-        onClose={() => setShowSignInModal(false)}
+        onClose={() => {
+          console.log('StreakHeader: Closing sign-in modal')
+          setShowSignInModal(false)
+        }}
         lang={lang}
         title={t.signInRequired}
         subtitle={t.signInRequiredSubtitle}
