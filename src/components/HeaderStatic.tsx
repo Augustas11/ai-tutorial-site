@@ -25,14 +25,13 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
     },
     { 
       name: isVietnamese ? 'Cộng đồng' : 'Community', 
-      href: `/${lang}/community`, 
+      href: 'https://www.facebook.com/share/g/1Ak4MKnUBB/?mibextid=NSMWBT', 
       icon: Users 
     },
   ]
 
   const brandName = isVietnamese ? 'Trường Sáng Tạo AI' : 'AI Creator School'
-  const newsletterText = isVietnamese ? 'Bản tin' : 'Newsletter'
-  const getStartedText = isVietnamese ? 'Bắt đầu' : 'Get Started'
+  const subscribeText = isVietnamese ? 'Đăng ký' : 'Subscribe'
 
   return (
     <header className="bg-white shadow-sm border-b">
@@ -51,12 +50,28 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
             {navigation.map((item) => {
               const Icon = item.icon
               const isAnchor = item.href.startsWith('#')
+              const isExternal = item.href.startsWith('http')
               
               if (isAnchor) {
                 return (
                   <a
                     key={item.name}
                     href={item.href}
+                    className="text-gray-700 hover:text-primary-600 transition-colors flex items-center space-x-1"
+                  >
+                    <Icon className="h-4 w-4" />
+                    <span>{item.name}</span>
+                  </a>
+                )
+              }
+              
+              if (isExternal) {
+                return (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-gray-700 hover:text-primary-600 transition-colors flex items-center space-x-1"
                   >
                     <Icon className="h-4 w-4" />
@@ -115,18 +130,12 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
                 </div>
               </div>
             </div>
-            <Link
-              href={`/${lang}/newsletter`}
-              className="text-gray-700 hover:text-primary-600 transition-colors"
-            >
-              {newsletterText}
-            </Link>
-            <Link
-              href={`/${lang}/get-started`}
+            <a
+              href="#newsletter"
               className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors"
             >
-              {getStartedText}
-            </Link>
+              {subscribeText}
+            </a>
           </div>
 
           {/* Mobile menu button */}
@@ -152,12 +161,29 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
               {navigation.map((item) => {
                 const Icon = item.icon
                 const isAnchor = item.href.startsWith('#')
+                const isExternal = item.href.startsWith('http')
                 
                 if (isAnchor) {
                   return (
                     <a
                       key={item.name}
                       href={item.href}
+                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 flex items-center space-x-2"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Icon className="h-4 w-4" />
+                      <span>{item.name}</span>
+                    </a>
+                  )
+                }
+                
+                if (isExternal) {
+                  return (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 flex items-center space-x-2"
                       onClick={() => setIsMenuOpen(false)}
                     >
@@ -186,20 +212,13 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
                     <span className="text-sm">{isVietnamese ? '🇻🇳' : '🇺🇸'}</span>
                   </div>
                 </div>
-                <Link
-                  href={`/${lang}/newsletter`}
-                  className="block px-3 py-2 text-gray-700 hover:text-primary-600"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {newsletterText}
-                </Link>
-                <Link
-                  href={`/${lang}/get-started`}
+                <a
+                  href="#newsletter"
                   className="block px-3 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  {getStartedText}
-                </Link>
+                  {subscribeText}
+                </a>
               </div>
             </div>
           </div>

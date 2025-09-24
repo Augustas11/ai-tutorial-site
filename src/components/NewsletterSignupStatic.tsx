@@ -1,4 +1,7 @@
+'use client'
+
 import { Mail, CheckCircle } from 'lucide-react'
+import { useState } from 'react'
 
 interface NewsletterSignupStaticProps {
   lang: string
