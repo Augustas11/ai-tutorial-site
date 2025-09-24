@@ -22,7 +22,7 @@ export default function NewsletterSignup() {
               </button>
             </div>
             <p className="text-sm text-primary-200 mt-3">
-              Join 10,000+ AI enthusiasts. No spam, unsubscribe anytime.
+              Join 100+ AI enthusiasts. No spam, unsubscribe anytime.
             </p>
           </div>
         </div>

@@ -22,7 +22,7 @@ export default function NewsletterSignupStatic({ lang }: NewsletterSignupStaticP
       subscribe: 'Subscribe',
       successTitle: 'Welcome to our community!',
       successDescription: 'You\'ll receive our weekly AI insights and tutorials directly in your inbox.',
-      disclaimer: 'Join 10,000+ AI enthusiasts. No spam, unsubscribe anytime.'
+      disclaimer: 'Join 100+ AI enthusiasts. No spam, unsubscribe anytime.'
     },
     vn: {
       title: 'Cập nhật với AI',
@@ -31,7 +31,7 @@ export default function NewsletterSignupStatic({ lang }: NewsletterSignupStaticP
       subscribe: 'Đăng ký',
       successTitle: 'Chào mừng đến với cộng đồng của chúng tôi!',
       successDescription: 'Bạn sẽ nhận được những hiểu biết và hướng dẫn AI hàng tuần trực tiếp trong hộp thư của mình.',
-      disclaimer: 'Tham gia 10,000+ người đam mê AI. Không spam, hủy đăng ký bất cứ lúc nào.'
+      disclaimer: 'Tham gia 100+ người đam mê AI. Không spam, hủy đăng ký bất cứ lúc nào.'
     }
   }
 

@@ -9,7 +9,7 @@ export default function StatsSection() {
   const stats = [
     {
       icon: Users,
-      value: '10,000+',
+      value: '100+',
       label: t('stats.learners'),
       description: t('stats.learnersDesc')
     },

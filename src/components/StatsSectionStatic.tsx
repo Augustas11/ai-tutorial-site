@@ -7,7 +7,7 @@ export default function StatsSectionStatic({ lang }: StatsSectionStaticProps) {
   
   const stats = [
     {
-      number: '10,000+',
+      number: '100+',
       label: isVietnamese ? 'Người học tích cực' : 'Active Learners',
       description: isVietnamese ? 'Tham gia cộng đồng đang phát triển của chúng tôi' : 'Join our growing community'
     },

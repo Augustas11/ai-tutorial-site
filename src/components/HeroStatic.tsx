@@ -13,7 +13,7 @@ export default function HeroStatic({ lang }: HeroStaticProps) {
   
   const content = {
     en: {
-      badge: 'Join 10,000+ AI learners',
+      badge: 'Join 100+ AI learners',
       title: 'Master AI with',
       titleHighlight: 'Practical Examples',
       description: 'Learn artificial intelligence through hands-on tutorials, ready-to-use prompts, and powerful automation tools. From beginner to expert, we\'ve got you covered.',
@@ -24,7 +24,7 @@ export default function HeroStatic({ lang }: HeroStaticProps) {
       students: 'Students'
     },
     vn: {
-      badge: 'Tham gia 10,000+ người học AI',
+      badge: 'Tham gia 100+ người học AI',
       title: 'Thành thạo AI với',
       titleHighlight: 'Ví dụ thực tế',
       description: 'Học trí tuệ nhân tạo thông qua các hướng dẫn thực hành, gợi ý sẵn sàng sử dụng và các công cụ tự động hóa mạnh mẽ. Từ người mới bắt đầu đến chuyên gia, chúng tôi có đầy đủ.',
@@ -131,7 +131,7 @@ export default function HeroStatic({ lang }: HeroStaticProps) {
               <div className="text-gray-600">{t.tools}</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-primary-600 mb-2">10K+</div>
+              <div className="text-3xl font-bold text-primary-600 mb-2">100+</div>
               <div className="text-gray-600">{t.students}</div>
             </div>
           </div>

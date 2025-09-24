@@ -23,7 +23,7 @@ const translations = {
     'nav.getStarted': 'Get Started',
     
     // Hero section
-    'hero.badge': 'Join 10,000+ AI learners',
+        'hero.badge': 'Join 100+ AI learners',
     'hero.title': 'Master AI with',
     'hero.titleHighlight': 'Practical Examples',
     'hero.description': 'Learn artificial intelligence through hands-on tutorials, ready-to-use prompts, and powerful automation tools. From beginner to expert, we\'ve got you covered.',
@@ -79,7 +79,7 @@ const translations = {
     'newsletter.description': 'Get weekly tutorials, AI news, and exclusive resources delivered to your inbox.',
     'newsletter.placeholder': 'Enter your email',
     'newsletter.subscribe': 'Subscribe',
-    'newsletter.disclaimer': 'Join 10,000+ AI enthusiasts. No spam, unsubscribe anytime.',
+        'newsletter.disclaimer': 'Join 100+ AI enthusiasts. No spam, unsubscribe anytime.',
     
     // Footer
     'footer.learn': 'Learn',
@@ -103,7 +103,7 @@ const translations = {
     'nav.getStarted': 'Bắt đầu',
     
     // Hero section
-    'hero.badge': 'Tham gia 10,000+ người học AI',
+        'hero.badge': 'Tham gia 100+ người học AI',
     'hero.title': 'Thành thạo AI với',
     'hero.titleHighlight': 'Ví dụ thực tế',
     'hero.description': 'Học trí tuệ nhân tạo thông qua các hướng dẫn thực hành, gợi ý sẵn sàng sử dụng và các công cụ tự động hóa mạnh mẽ. Từ người mới bắt đầu đến chuyên gia, chúng tôi có đầy đủ.',
@@ -159,7 +159,7 @@ const translations = {
     'newsletter.description': 'Nhận hướng dẫn hàng tuần, tin tức AI và tài nguyên độc quyền được gửi trực tiếp vào hộp thư của bạn.',
     'newsletter.placeholder': 'Nhập email của bạn',
     'newsletter.subscribe': 'Đăng ký',
-    'newsletter.disclaimer': 'Tham gia 10,000+ người đam mê AI. Không spam, hủy đăng ký bất cứ lúc nào.',
+        'newsletter.disclaimer': 'Tham gia 100+ người đam mê AI. Không spam, hủy đăng ký bất cứ lúc nào.',
     
     // Footer
     'footer.learn': 'Học',

@@ -80,7 +80,7 @@ export default function Hero() {
               <div className="text-gray-600">{t('hero.tools')}</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-primary-600 mb-2">10K+</div>
+              <div className="text-3xl font-bold text-primary-600 mb-2">100+</div>
               <div className="text-gray-600">{t('hero.students')}</div>
             </div>
           </div>
