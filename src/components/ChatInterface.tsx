@@ -28,7 +28,10 @@ export default function ChatInterface({ lang, placeholder }: ChatInterfaceProps)
   }
 
   useEffect(() => {
-    scrollToBottom()
+    // Only scroll if there are messages
+    if (messages.length > 0) {
+      scrollToBottom()
+    }
   }, [messages])
 
   const handleSubmit = async (e: React.FormEvent) => {
