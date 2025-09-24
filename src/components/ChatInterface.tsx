@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Send, Bot, User, Loader2 } from 'lucide-react'
+import { Send, Bot, User, Loader2, Flame } from 'lucide-react'
+import { useStreakNotifications } from './StreakNotification'
 
 interface Message {
   id: string
@@ -13,15 +14,19 @@ interface Message {
 interface ChatInterfaceProps {
   lang: string
   placeholder?: string
+  userId?: string
+  onStreakUpdate?: (streakData: any) => void
 }
 
-export default function ChatInterface({ lang, placeholder }: ChatInterfaceProps) {
+export default function ChatInterface({ lang, placeholder, userId = 'default-user', onStreakUpdate }: ChatInterfaceProps) {
   const [inputValue, setInputValue] = useState('')
   const [messages, setMessages] = useState<Message[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [streakBonus, setStreakBonus] = useState(0)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const isVietnamese = lang === 'vn'
+  const { addNotification } = useStreakNotifications()
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -50,6 +55,38 @@ export default function ChatInterface({ lang, placeholder }: ChatInterfaceProps)
     setInputValue('')
     setIsLoading(true)
     setError('')
+
+    // Record chat activity for streak
+    try {
+      const streakResponse = await fetch('/api/streak', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId,
+          activityType: 'chat',
+          pointsEarned: 2
+        }),
+      })
+      
+      if (streakResponse.ok) {
+        const streakData = await streakResponse.json()
+        if (streakData.success) {
+          setStreakBonus(streakData.data.streakBonus)
+          onStreakUpdate?.(streakData.data.streakData)
+          
+          // Show milestone notifications
+          if (streakData.data.newMilestones?.length > 0) {
+            streakData.data.newMilestones.forEach((milestone: any) => {
+              addNotification(milestone)
+            })
+          }
+        }
+      }
+    } catch (err) {
+      console.error('Failed to record chat streak:', err)
+    }
 
     try {
       const response = await fetch('/api/chat', {
@@ -117,6 +154,12 @@ export default function ChatInterface({ lang, placeholder }: ChatInterfaceProps)
           <span className="text-white font-medium">
             {isVietnamese ? 'AI Trợ lý' : 'AI Assistant'}
           </span>
+          {streakBonus > 0 && (
+            <div className="flex items-center space-x-1 bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
+              <Flame className="h-3 w-3" />
+              <span className="text-xs font-medium">+{streakBonus}</span>
+            </div>
+          )}
         </div>
         {messages.length > 0 && (
           <button

@@ -3,6 +3,7 @@
 import { Star } from 'lucide-react'
 import { useState } from 'react'
 import ChatInterface from './ChatInterface'
+import StreakNotification, { useStreakNotifications } from './StreakNotification'
 
 interface HeroStaticProps {
   lang: string
@@ -10,6 +11,9 @@ interface HeroStaticProps {
 
 export default function HeroStatic({ lang }: HeroStaticProps) {
   const isVietnamese = lang === 'vn'
+  const [userId] = useState('default-user') // In production, this would come from user authentication
+  const [streakData, setStreakData] = useState(null)
+  const { currentNotification, addNotification, closeNotification } = useStreakNotifications()
   
   const content = {
     en: {
@@ -66,6 +70,8 @@ export default function HeroStatic({ lang }: HeroStaticProps) {
             <ChatInterface 
               lang={lang}
               placeholder={t.chatPlaceholder}
+              userId={userId}
+              onStreakUpdate={setStreakData}
             />
           </div>
           
@@ -85,6 +91,16 @@ export default function HeroStatic({ lang }: HeroStaticProps) {
           </div>
         </div>
       </div>
+
+      {/* Streak Notifications */}
+      {currentNotification && (
+        <StreakNotification
+          milestone={currentNotification}
+          onClose={closeNotification}
+          autoClose={true}
+          duration={5000}
+        />
+      )}
     </section>
   )
 }

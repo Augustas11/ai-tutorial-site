@@ -1,7 +1,8 @@
 'use client'
 
-import { Mail, CheckCircle } from 'lucide-react'
+import { Mail, CheckCircle, Flame } from 'lucide-react'
 import { useState } from 'react'
+import { useStreakNotifications } from './StreakNotification'
 
 interface NewsletterSignupStaticProps {
   lang: string
@@ -12,7 +13,9 @@ export default function NewsletterSignupStatic({ lang }: NewsletterSignupStaticP
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [error, setError] = useState('')
+  const [streakBonus, setStreakBonus] = useState(0)
   const isVietnamese = lang === 'vn'
+  const { addNotification } = useStreakNotifications()
   
   const content = {
     en: {
@@ -78,6 +81,37 @@ export default function NewsletterSignupStatic({ lang }: NewsletterSignupStaticP
       
       setIsSuccess(true)
       setEmail('')
+
+      // Record subscription activity for streak
+      try {
+        const streakResponse = await fetch('/api/streak', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: 'default-user', // In production, this would come from user authentication
+            activityType: 'subscription',
+            pointsEarned: 30
+          }),
+        })
+        
+        if (streakResponse.ok) {
+          const streakData = await streakResponse.json()
+          if (streakData.success) {
+            setStreakBonus(streakData.data.streakBonus)
+            
+            // Show milestone notifications
+            if (streakData.data.newMilestones?.length > 0) {
+              streakData.data.newMilestones.forEach((milestone: any) => {
+                addNotification(milestone)
+              })
+            }
+          }
+        }
+      } catch (err) {
+        console.error('Failed to record subscription streak:', err)
+      }
       
       // Reset success state after 5 seconds
       setTimeout(() => {
@@ -158,9 +192,17 @@ export default function NewsletterSignupStatic({ lang }: NewsletterSignupStaticP
             <h3 className="text-xl font-semibold text-white mb-2">
               {t.successTitle}
             </h3>
-            <p className="text-primary-100">
+            <p className="text-primary-100 mb-4">
               {t.successDescription}
             </p>
+            {streakBonus > 0 && (
+              <div className="flex items-center justify-center space-x-2 bg-orange-100 text-orange-800 px-4 py-2 rounded-full">
+                <Flame className="h-4 w-4" />
+                <span className="font-medium">
+                  +{streakBonus} {isVietnamese ? 'điểm thưởng streak' : 'streak bonus points'}
+                </span>
+              </div>
+            )}
           </div>
         )}
       </div>

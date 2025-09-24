@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Zap, BookOpen, Wrench, Users, Globe, Menu, X } from 'lucide-react'
+import { Zap, BookOpen, Wrench, Users, Globe, Menu, X, BarChart3 } from 'lucide-react'
 import StreakHeader from './StreakHeader'
 
 interface HeaderStaticProps {
@@ -23,6 +23,11 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
       name: isVietnamese ? 'Công cụ' : 'Tools', 
       href: '#tools', 
       icon: Wrench 
+    },
+    { 
+      name: isVietnamese ? 'Bảng điều khiển' : 'Dashboard', 
+      href: `/${lang}/dashboard`, 
+      icon: BarChart3 
     },
     { 
       name: isVietnamese ? 'Cộng đồng' : 'Community', 
