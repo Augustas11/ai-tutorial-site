@@ -17,19 +17,15 @@ export default function FooterStatic({ lang }: FooterStaticProps) {
     learn: [
       { 
         name: isVietnamese ? 'Hướng dẫn' : 'Tutorials', 
-        href: `/${lang}/tutorials` 
+        href: '#tutorials' 
       },
       { 
         name: isVietnamese ? 'Công cụ AI' : 'AI Tools', 
-        href: `/${lang}/tools` 
-      },
-      { 
-        name: isVietnamese ? 'Tài nguyên' : 'Resources', 
-        href: `/${lang}/resources` 
+        href: '#tools' 
       },
       { 
         name: isVietnamese ? 'Cộng đồng' : 'Community', 
-        href: `/${lang}/community` 
+        href: 'https://www.facebook.com/share/g/1Ak4MKnUBB/?mibextid=NSMWBT' 
       },
     ],
     support: [
@@ -108,16 +104,49 @@ export default function FooterStatic({ lang }: FooterStaticProps) {
               {isVietnamese ? 'Học' : 'Learn'}
             </h3>
             <ul className="space-y-2">
-              {footerLinks.learn.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-400 hover:text-white transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
+              {footerLinks.learn.map((link) => {
+                const isAnchor = link.href.startsWith('#')
+                const isExternal = link.href.startsWith('http')
+                
+                if (isAnchor) {
+                  return (
+                    <li key={link.name}>
+                      <a
+                        href={link.href}
+                        className="text-gray-400 hover:text-white transition-colors"
+                      >
+                        {link.name}
+                      </a>
+                    </li>
+                  )
+                }
+                
+                if (isExternal) {
+                  return (
+                    <li key={link.name}>
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-white transition-colors"
+                      >
+                        {link.name}
+                      </a>
+                    </li>
+                  )
+                }
+                
+                return (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-gray-400 hover:text-white transition-colors"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                )
+              })}
             </ul>
           </div>
 
