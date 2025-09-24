@@ -40,10 +40,10 @@ export default function StreakHeader({ userId = 'default-user', className = '', 
   }
 
   const getStreakIcon = (streak: number) => {
-    if (streak >= 100) return <Trophy className="h-4 w-4 text-yellow-500" />
-    if (streak >= 30) return <Star className="h-4 w-4 text-purple-500" />
-    if (streak >= 7) return <Flame className="h-4 w-4 text-orange-500" />
-    return <Zap className="h-4 w-4 text-blue-500" />
+    if (streak >= 100) return <Trophy className="h-4 w-4 text-yellow-200" />
+    if (streak >= 30) return <Star className="h-4 w-4 text-purple-200" />
+    if (streak >= 7) return <Flame className="h-4 w-4 text-orange-200" />
+    return <Zap className="h-4 w-4 text-blue-200" />
   }
 
   const getStreakColor = (streak: number) => {
@@ -64,9 +64,12 @@ export default function StreakHeader({ userId = 'default-user', className = '', 
   if (!streakData || streakData.currentStreak === 0) {
     return (
       <div className={`flex items-center space-x-2 ${className}`}>
-        <div className="flex items-center space-x-1 bg-gray-100 px-3 py-1 rounded-full">
-          <Zap className="h-4 w-4 text-gray-500" />
-          <span className="text-sm font-medium text-gray-600">Start streak</span>
+        <div className="flex items-center space-x-2 bg-gray-100 px-4 py-2 rounded-full border border-gray-200">
+          <Zap className="h-4 w-4 text-gray-600" />
+          <div className="flex flex-col">
+            <span className="text-sm font-medium text-gray-700 leading-none">Start</span>
+            <span className="text-xs text-gray-500 leading-none">Streak</span>
+          </div>
         </div>
       </div>
     )
@@ -75,14 +78,16 @@ export default function StreakHeader({ userId = 'default-user', className = '', 
   return (
     <div className={`flex items-center space-x-2 ${className}`}>
       {/* Streak Display */}
-      <div className={`flex items-center space-x-2 bg-gradient-to-r ${getStreakColor(streakData.currentStreak)} px-3 py-1 rounded-full text-white`}>
+      <div className={`flex items-center space-x-2 bg-gradient-to-r ${getStreakColor(streakData.currentStreak)} px-4 py-2 rounded-full text-white shadow-sm`}>
         {getStreakIcon(streakData.currentStreak)}
-        <span className="font-bold text-sm">
-          {streakData.currentStreak}
-        </span>
-        <span className="text-xs opacity-90">
-          {streakData.currentStreak === 1 ? 'day' : 'days'}
-        </span>
+        <div className="flex flex-col">
+          <span className="font-bold text-sm leading-none">
+            {streakData.currentStreak} {streakData.currentStreak === 1 ? 'Day' : 'Days'}
+          </span>
+          <span className="text-xs opacity-80 leading-none">
+            Streak
+          </span>
+        </div>
       </div>
 
       {/* Streak Bonus Indicator */}
@@ -97,11 +102,11 @@ export default function StreakHeader({ userId = 'default-user', className = '', 
 
       {/* Longest Streak (on hover) */}
       <div className="group relative">
-        <div className="text-xs text-gray-500 cursor-help">
-          Best: {streakData.longestStreak}
+        <div className="text-xs text-gray-600 cursor-help font-medium">
+          Best: {streakData.longestStreak} {streakData.longestStreak === 1 ? 'day' : 'days'}
         </div>
-        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-          Longest streak: {streakData.longestStreak} days
+        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-800 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">
+          Longest streak: {streakData.longestStreak} {streakData.longestStreak === 1 ? 'day' : 'days'}
         </div>
       </div>
     </div>
