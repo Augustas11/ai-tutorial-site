@@ -112,7 +112,7 @@ export default function HeaderStatic({ lang }: HeaderStaticProps) {
           {/* CTA Button */}
           <div className="hidden md:flex items-center space-x-4">
             {/* Streak Display */}
-            <StreakHeader userId="default-user" refreshTrigger={refreshTrigger} />
+            <StreakHeader userId="default-user" refreshTrigger={refreshTrigger} lang={lang} />
             
             <div className="relative group">
               <button className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors">
